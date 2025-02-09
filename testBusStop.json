@@ -1,0 +1,42 @@
+[
+	{
+		"busStop":"nims:sengen",
+		"ja":"千現",
+		"en":"Sengen"
+	},
+	{
+		"busStop":"nims:namiki",
+		"ja":"並木",
+		"en":"Namiki"
+	},
+	{
+		"busStop":"nims:sakura",
+		"ja":"桜",
+		"en":"Sakura"
+	},
+	{
+		"busStop":"nims:tsukuba",
+		"ja":"つくば",
+		"en":"Tsukuba"
+	},
+	{
+		"busStop":"kantetsu:tsukubaHospital",
+		"ja":"つくば大学病院",
+		"en":"Tsukuba UNIV. hospital"
+	},
+	{
+		"busStop":"kantetsu:nims",
+		"ja":"物質・材料研究機構 筑波宇宙センター",
+		"en":"National Institute for Materias Science, Tsukuba Space center"
+	},
+	{
+		"busStop":"kantetsu:gakuenNamiki",
+		"ja":"学園並木",
+		"en":"Gakuen namiki"
+	},
+	{
+		"busStop":"kantetsu:arakawaOki",
+		"ja":"荒川沖駅",
+		"en":"Arakawa oki Sta."
+	}
+]
