@@ -68,10 +68,9 @@ function swapBusTimetable(specifiedBusTimetableArray:BusTimetable[],i:number,j:n
 	specifiedBusTimetableArray[j] = tmpSpecifiedBusTimetable;
 };
 
-function getArrivalTimeString(timeTableArray:Timetable[],busStop:string,time:string):string{
-	console.log("getDestinationTimeString");
+function getArrivalTimeString(timeTableArray:Timetable[],busStop:string):string{
+	console.log("getArrivalTimeString");
 	let specifiedTime:string = "none";
-	console.log(searchCondition.departureOrArrival+" "+searchCondition.to);
 	for (let timetable of timeTableArray){
 		if (timetable.busStop === busStop && timetable.arrival !== "none"){
 			specifiedTime = timetable.arrival;
@@ -80,62 +79,42 @@ function getArrivalTimeString(timeTableArray:Timetable[],busStop:string,time:str
 	return specifiedTime;
 };
 
-
-function extractDepartureTime(busTimetableArray:BusTimetable[],searchCondition:SearchCondition):BusTimetable[]{
-	console.log("extractSpecifiedDestination");
-	let specifiedBusTimetableArray:BusTimetable[]=[];
-	let index = 0;
-	for (let busTimetable of busTimetableArray){
-		for (let timetable of busTimetable.timetable){
-			if (timetable.departure === searchCondition.from){
-				specifiedBusTimetableArray[index++]=busTimetable;
-			};
-		};
-	};
-	return specifiedBusTimetableArray;
+function getDepatureTimeString(timeTableArray:Timetable[],busStop:string):string{
+	console.log("getDepatureTimeString");
+	let specifiedTime:string = "none";
+	for (let timetable of timeTableArray){
+		if (timetable.busStop === busStop && timetable.departure !== "none"){
+			specifiedTime = timetable.arrival;
+		}
+	}	
+	return specifiedTime;
 };
 
-function extractArrivalTime(busTimetableArray:BusTimetable[],searchCondition:SearchCondition):BusTimetable[]{
-	console.log("extractSpecifiedDestination");
-	let specifiedBusTimetableArray:BusTimetable[]=[];
-	let index = 0;
-	for (let busTimetable of busTimetableArray){
-		for (let timetable of busTimetable.timetable){
-			if (timetable.arrival === searchCondition.to){
-				specifiedBusTimetableArray[index++]=busTimetable;
-			};
-		};
-	};
-	return specifiedBusTimetableArray;
-};
-
-function extractSpecifiedBusTypeTimetableArray(busTimetableArray: BusTimetable[], busType:string): BusTimetable[] {
+function extractBusTypeBusTimetableArray(busTimetableArray: BusTimetable[], busType:string): BusTimetable[] {
 	console.log("extractSpecifiedBusTypeTimetableArray");
 	let index = 0;
 	let specifiedBusTimetableArray: BusTimetable[] = [];
 	for (let busTimetable of busTimetableArray) {
 		if (busTimetable.busType === busType) {
-			console.log(busTimetable.timetable);
 			specifiedBusTimetableArray[index++] = busTimetable;
 		};
 	};
 	return specifiedBusTimetableArray;
 };
 
-function extractSpecifiedDirectionBusTimetableArray(busTimetableArray: BusTimetable[], direction:string): BusTimetable[] {
+function extractDirectionBusTimetableArray(busTimetableArray: BusTimetable[], direction:string): BusTimetable[] {
 	console.log("extractSpecifiedDirectionTimetableArray");
 	let index = 0;
 	let specifiedBusTimetableArray: BusTimetable[] = [];
 	for (let busTimetable of busTimetableArray) {
 		if (busTimetable.direction === direction) {
-			console.log(busTimetable.timetable);
 			specifiedBusTimetableArray[index++] = busTimetable;
 		};
 	};
 	return specifiedBusTimetableArray;
 };
 
-function extractLessThanArrivalBusTimetableArray(busTimetableArray: BusTimetable[], busStopCond:string,timeCond:string): BusTimetable[] {
+function extractLessThanBusTimetableArray(busTimetableArray: BusTimetable[], busStop:string,time:string): BusTimetable[] {
 	console.log("extractLessThanArrivalTimetableArray");
 	let index = 0;
 	let specifiedBusTimetableArray: BusTimetable[] = [];
@@ -143,8 +122,7 @@ function extractLessThanArrivalBusTimetableArray(busTimetableArray: BusTimetable
 		let flag = false;
 		for (let timetable of busTimetable.timetable){
 			const arrival = timetable.arrival;
-			const busStop = timetable.busStop;
-			if ( busStop ===  busStopCond && (arrival !== "none" && toTime(arrival) < toTime(timeCond))){
+			if (timetable.busStop ===  busStop && (arrival !== "none" && toTime(arrival) <= toTime(time))){
 				flag = true;
 			};
 		};
@@ -155,6 +133,24 @@ function extractLessThanArrivalBusTimetableArray(busTimetableArray: BusTimetable
 	return specifiedBusTimetableArray;
 };
 
+function extractGraterThanBusTimetableArray(busTimetableArray: BusTimetable[], busStop:string,time:string): BusTimetable[] {
+	console.log("extractGraterThanBusTimetableArray");
+	let index = 0;
+	let specifiedBusTimetableArray: BusTimetable[] = [];
+	for (let busTimetable of busTimetableArray) {
+		let flag = false;
+		for (let timetable of busTimetable.timetable){
+			const departure = timetable.departure;
+			if (timetable.busStop ===  busStop && (departure !== "none" && toTime(departure) >= toTime(time))){
+				flag = true;
+			};
+		};
+		if(flag){
+			specifiedBusTimetableArray[index++] = busTimetable;
+		};
+	};
+	return specifiedBusTimetableArray;
+};
 
 function sortingArrivalBusTimetableArray(busTimetableArray: BusTimetable[],busStop:string,time:string): BusTimetable[] {
 	
@@ -165,7 +161,25 @@ function sortingArrivalBusTimetableArray(busTimetableArray: BusTimetable[],busSt
 	{
 		let current = outer;
 		for (let inner = outer + 1; inner < specifiedBusTimetableArray.length ; inner++){
-			if(toTime(getArrivalTimeString(specifiedBusTimetableArray[current].timetable,busStop,time)) < toTime(getArrivalTimeString(specifiedBusTimetableArray[inner].timetable,busStop,time))){
+			if(toTime(getArrivalTimeString(specifiedBusTimetableArray[current].timetable,busStop)) < toTime(getArrivalTimeString(specifiedBusTimetableArray[inner].timetable,busStop))){
+				current = inner;
+			}
+		};
+		swapBusTimetable(specifiedBusTimetableArray,current,outer);
+	};
+	return specifiedBusTimetableArray;
+};
+
+function sortingDepartureBusTimetableArray(busTimetableArray: BusTimetable[],busStop:string,time:string): BusTimetable[] {
+	
+	console.log("sortingBusTimetableArray");
+	let specifiedBusTimetableArray:BusTimetable[]=busTimetableArray;
+
+	for (let outer = 0; outer < specifiedBusTimetableArray.length ; outer++)
+	{
+		let current = outer;
+		for (let inner = outer + 1; inner < specifiedBusTimetableArray.length ; inner++){
+			if(toTime(getArrivalTimeString(specifiedBusTimetableArray[current].timetable,busStop)) > toTime(getArrivalTimeString(specifiedBusTimetableArray[inner].timetable,busStop))){
 				current = inner;
 			}
 		};
@@ -175,41 +189,29 @@ function sortingArrivalBusTimetableArray(busTimetableArray: BusTimetable[],busSt
 };
 
 function getResult(busTimetableArray:BusTimetable[],searchCondition:SearchCondition):BusTimetable[]{
-	const busTypeTimetableArray = extractSpecifiedBusTypeTimetableArray(busTimetableArray, searchCondition.busType);
+	const busTypeBusTimetableArray = extractBusTypeBusTimetableArray(busTimetableArray, searchCondition.busType);
+	const directedBusTimetableArray = extractDirectionBusTimetableArray(busTypeBusTimetableArray,searchCondition.direction);
 	if (searchCondition.departureOrArrival === "arrival"){
-		if(searchCondition.direction === "descending"){
-
-		}else{
-			const ascendingBusTimetableArray = extractSpecifiedDirectionBusTimetableArray(busTypeTimetableArray,searchCondition.direction);
-			if(ascendingBusTimetableArray.length!==0){
-				const lessThanArrivalAscedingBusTimetableArray = extractLessThanArrivalBusTimetableArray(ascendingBusTimetableArray,searchCondition.to,searchCondition.time);
-				printBusTimetableArray(lessThanArrivalAscedingBusTimetableArray);
-				if (lessThanArrivalAscedingBusTimetableArray.length!==0){
-					const sortedLessThanArrivalAscedingBusTimetableArray = sortingArrivalBusTimetableArray(lessThanArrivalAscedingBusTimetableArray,searchCondition.to,searchCondition.time);
-					printBusTimetableArray(sortedLessThanArrivalAscedingBusTimetableArray);
-					if (sortedLessThanArrivalAscedingBusTimetableArray.length!==0){
-						const result:BusTimetable[]=[sortedLessThanArrivalAscedingBusTimetableArray[0]];
-						return result;
-					};
-				};
-			};
-			return [];
-		};
+		const lessThanBusTimetableArray = extractLessThanBusTimetableArray(directedBusTimetableArray,searchCondition.to,searchCondition.time);
+		printBusTimetableArray(lessThanBusTimetableArray);
+		const sortedBusTimetableArray = sortingArrivalBusTimetableArray(lessThanBusTimetableArray,searchCondition.to,searchCondition.time);
+		printBusTimetableArray(sortedBusTimetableArray);
+		const result:BusTimetable[]=[sortedBusTimetableArray[0]];
+		return result;
 	}else{
-		if(searchCondition.direction === "descending"){
-			
-		}else{
-
-		};
+		const graterThanBusTimetableArray = extractGraterThanBusTimetableArray(directedBusTimetableArray,searchCondition.from,searchCondition.time);
+		printBusTimetableArray(graterThanBusTimetableArray);
+		const sortedBusTimetableArray = sortingDepartureBusTimetableArray(graterThanBusTimetableArray,searchCondition.from,searchCondition.time);
+		printBusTimetableArray(sortedBusTimetableArray);
+		const result:BusTimetable[]=[sortedBusTimetableArray[0]];
+		return result;
 	};
-	return busTypeTimetableArray;
+	return busTypeBusTimetableArray;
 };
 
-const results = getResult(busTimetableArray,searchCondition);
+const result = getResult(busTimetableArray,searchCondition);
 console.log("*****result*****");
-for (let result of results.reverse()){
-	console.log(result);
-};
+printBusTimetableArray(result);
 /*
 const ascendingNimsBusTimetableArray = extractSpecifiedDirection(nimsBusTypeTimetableArray, searchCondition);
 const nimsBusDepatureTimetableArray = extractDepartureTime(ascendingNimsBusTimetableArray,searchCondition);
