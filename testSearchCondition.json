@@ -3,6 +3,6 @@
 	"from":"nims:namiki",
 	"to":"nims:tsukuba",
 	"departureOrArrival":"arrival",
-	"direction":"ascending",
-	"time":"0900"
+	"direction":"none",
+	"time":"0930"
 }
