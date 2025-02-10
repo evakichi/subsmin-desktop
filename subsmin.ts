@@ -1,19 +1,23 @@
 import * as fs from "fs";
+
 type BusType = {
 	busType: string;
 	ja: string;
 	en: string;
 };
+
 type BusStop = {
 	busStop: string;
 	ja: string;
 	en: string;
-	transit:string;
+	ascending:NextHop[];
+	descending:NextHop[];
 };
-type Transit = {
-	transit:string;
-	direction:string;
+
+type NextHop = {
+	nexthop:string;
 };
+
 type BusTimetable = {
 	busType: string;
 	opration: string;
@@ -24,6 +28,7 @@ type BusTimetable = {
 	carNo:string;
 	timetable: Timetable[];
 };
+
 type Timetable = {
 	busStop: string;
 	departure: string;
@@ -43,10 +48,12 @@ type SearchResult ={
 	searchCondition:SearchCondition;
 	busTimeTable?:BusTimetable[];
 };
+
+
 const inputBusType: string = fs.readFileSync("/home/evakichi/subsmin-desktop/testBusType.json", 'utf-8');
-const busTypeArray: BusType[] = JSON.parse(inputBusType);
+const targetBusTypeArray: BusType[] = JSON.parse(inputBusType);
 const inputBusStop: string = fs.readFileSync("/home/evakichi/subsmin-desktop/testBusStop.json", 'utf-8');
-const busStopArray: BusStop[] = JSON.parse(inputBusStop);
+const targetBusStopArray: BusStop[] = JSON.parse(inputBusStop);
 const inputBusTimetable: string = fs.readFileSync("/home/evakichi/subsmin-desktop/testBusTimetable.json", 'utf-8');
 const targetBusTimetableArray: BusTimetable[] = JSON.parse(inputBusTimetable);
 const inputSearchCondition: string = fs.readFileSync("/home/evakichi/subsmin-desktop/testSearchCondition.json", 'utf-8');
@@ -188,7 +195,7 @@ function removeHeadFromBusTimeTableArray(busTimetableArray:BusTimetable[]):BusTi
 function getTransitString(busStopArray:BusStop[],name:string):string{
 	for (let busStop of busStopArray){
 		if (busStop.busStop===name){
-			return busStop.transit
+			return "none";
 		}
 	}
 	return "none";
@@ -384,6 +391,82 @@ function getBusTimetableArray(prevBusTimetableArray:BusTimetable[],currentBusTim
 	*/
 	return specifiedBusTimetableArray;
 };
-
+/*
 const result = getBusTimetableArray(targetBusTimetableArray,targetBusTimetableArray,targetSearchCondition,busStopArray,0);
 printBusTimetableArray("******resrut******",targetSearchCondition,result);
+*/
+function searchBusStopIndex(busStopArray:BusStop[],condString:string):number{
+	let index:number = 0;
+	for (let busStop of busStopArray){
+		if (busStop.busStop===condString){
+			return index;
+		};
+		index++;
+	}
+	return -1;
+};
+
+function printNextHop(busStopArray:BusStop[]){
+	for(let busStop of busStopArray){
+		console.log(busStop);
+	};
+};
+
+function createAscendingNetworkGraph(busStopArray:BusStop[]):number[][]{
+	let graph:number[][]=[];
+	for (let outer = 0; outer < busStopArray.length ; outer++){
+		graph[outer]=[]
+		for (let inner = 0; inner < busStopArray.length ; inner++){
+			graph[outer][inner]=0
+		};
+	};
+	for (let busStop of busStopArray){
+		let resultOuterIndex:number = searchBusStopIndex(busStopArray,busStop.busStop);
+		if (resultOuterIndex!==-1){
+			for(let asceding of busStop.ascending){
+				let resultInnerIndex:number = searchBusStopIndex(busStopArray,asceding.nexthop);
+				if (resultInnerIndex!==-1){
+					graph[resultOuterIndex][resultInnerIndex]=1;
+				}
+			};
+		}
+	};
+	return graph;
+};
+
+function createDescendingNetworkGraph(busStopArray:BusStop[]):number[][]{
+	let graph:number[][]=[];
+	for (let outer = 0; outer < busStopArray.length ; outer++){
+		graph[outer]=[]
+		for (let inner = 0; inner < busStopArray.length ; inner++){
+			graph[outer][inner]=0
+		};
+	};
+	for (let busStop of busStopArray){
+		let resultOuterIndex:number = searchBusStopIndex(busStopArray,busStop.busStop);
+		if (resultOuterIndex!==-1){
+			for(let descending of busStop.descending){
+				let resultInnerIndex:number = searchBusStopIndex(busStopArray,descending.nexthop);
+				if (resultInnerIndex!==-1){
+					graph[resultOuterIndex][resultInnerIndex]=1;
+				}
+			};
+		}
+	};
+	return graph;
+};
+
+printNextHop(targetBusStopArray);
+const ascendingGraph:number[][] = createAscendingNetworkGraph(targetBusStopArray);
+console.table(ascendingGraph);
+const descendingGraph:number[][] = createDescendingNetworkGraph(targetBusStopArray);
+console.table(descendingGraph);
+
+function calcWeight(from:string,to:string):number[]{
+	const INF:number = Number.MAX_SAFE_INTEGER;
+	return [];
+};
+
+function dijkstra(graph:number[][],busStopArray:BusStop[],from:string,to:string):number[]{
+	return [];
+}

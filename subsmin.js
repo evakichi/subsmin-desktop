@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var inputBusType = fs.readFileSync("/home/evakichi/subsmin-desktop/testBusType.json", 'utf-8');
-var busTypeArray = JSON.parse(inputBusType);
+var targetBusTypeArray = JSON.parse(inputBusType);
 var inputBusStop = fs.readFileSync("/home/evakichi/subsmin-desktop/testBusStop.json", 'utf-8');
-var busStopArray = JSON.parse(inputBusStop);
+var targetBusStopArray = JSON.parse(inputBusStop);
 var inputBusTimetable = fs.readFileSync("/home/evakichi/subsmin-desktop/testBusTimetable.json", 'utf-8');
 var targetBusTimetableArray = JSON.parse(inputBusTimetable);
 var inputSearchCondition = fs.readFileSync("/home/evakichi/subsmin-desktop/testSearchCondition.json", 'utf-8');
@@ -158,7 +158,7 @@ function getTransitString(busStopArray, name) {
     for (var _i = 0, busStopArray_1 = busStopArray; _i < busStopArray_1.length; _i++) {
         var busStop = busStopArray_1[_i];
         if (busStop.busStop === name) {
-            return busStop.transit;
+            return "none";
         }
     }
     return "none";
@@ -359,5 +359,97 @@ function getBusTimetableArray(prevBusTimetableArray, currentBusTimetableArray, s
     return specifiedBusTimetableArray;
 }
 ;
-var result = getBusTimetableArray(targetBusTimetableArray, targetBusTimetableArray, targetSearchCondition, busStopArray, 0);
-printBusTimetableArray("******resrut******", targetSearchCondition, result);
+/*
+const result = getBusTimetableArray(targetBusTimetableArray,targetBusTimetableArray,targetSearchCondition,busStopArray,0);
+printBusTimetableArray("******resrut******",targetSearchCondition,result);
+*/
+function searchBusStopIndex(busStopArray, condString) {
+    var index = 0;
+    for (var _i = 0, busStopArray_2 = busStopArray; _i < busStopArray_2.length; _i++) {
+        var busStop = busStopArray_2[_i];
+        if (busStop.busStop === condString) {
+            return index;
+        }
+        ;
+        index++;
+    }
+    return -1;
+}
+;
+function printNextHop(busStopArray) {
+    for (var _i = 0, busStopArray_3 = busStopArray; _i < busStopArray_3.length; _i++) {
+        var busStop = busStopArray_3[_i];
+        console.log(busStop);
+    }
+    ;
+}
+;
+function createAscendingNetworkGraph(busStopArray) {
+    var graph = [];
+    for (var outer = 0; outer < busStopArray.length; outer++) {
+        graph[outer] = [];
+        for (var inner = 0; inner < busStopArray.length; inner++) {
+            graph[outer][inner] = 0;
+        }
+        ;
+    }
+    ;
+    for (var _i = 0, busStopArray_4 = busStopArray; _i < busStopArray_4.length; _i++) {
+        var busStop = busStopArray_4[_i];
+        var resultOuterIndex = searchBusStopIndex(busStopArray, busStop.busStop);
+        if (resultOuterIndex !== -1) {
+            for (var _a = 0, _b = busStop.ascending; _a < _b.length; _a++) {
+                var asceding = _b[_a];
+                var resultInnerIndex = searchBusStopIndex(busStopArray, asceding.nexthop);
+                if (resultInnerIndex !== -1) {
+                    graph[resultOuterIndex][resultInnerIndex] = 1;
+                }
+            }
+            ;
+        }
+    }
+    ;
+    return graph;
+}
+;
+function createDescendingNetworkGraph(busStopArray) {
+    var graph = [];
+    for (var outer = 0; outer < busStopArray.length; outer++) {
+        graph[outer] = [];
+        for (var inner = 0; inner < busStopArray.length; inner++) {
+            graph[outer][inner] = 0;
+        }
+        ;
+    }
+    ;
+    for (var _i = 0, busStopArray_5 = busStopArray; _i < busStopArray_5.length; _i++) {
+        var busStop = busStopArray_5[_i];
+        var resultOuterIndex = searchBusStopIndex(busStopArray, busStop.busStop);
+        if (resultOuterIndex !== -1) {
+            for (var _a = 0, _b = busStop.descending; _a < _b.length; _a++) {
+                var descending = _b[_a];
+                var resultInnerIndex = searchBusStopIndex(busStopArray, descending.nexthop);
+                if (resultInnerIndex !== -1) {
+                    graph[resultOuterIndex][resultInnerIndex] = 1;
+                }
+            }
+            ;
+        }
+    }
+    ;
+    return graph;
+}
+;
+printNextHop(targetBusStopArray);
+var ascendingGraph = createAscendingNetworkGraph(targetBusStopArray);
+console.table(ascendingGraph);
+var descendingGraph = createDescendingNetworkGraph(targetBusStopArray);
+console.table(descendingGraph);
+function calcWeight(from, to) {
+    var INF = Number.MAX_SAFE_INTEGER;
+    return [];
+}
+;
+function dijkstra(graph, busStopArray, from, to) {
+    return [];
+}

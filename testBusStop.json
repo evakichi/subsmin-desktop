@@ -1,50 +1,58 @@
 [
 	{
+		"busStop":"tsukuba",
+		"ja":"つくば",
+		"en":"Tsukuba",
+		"ascending":[{"nexthop":"kantetsu:tsukubaHospital"}],
+		"descending":[{"nexthop":"nims:sakura"},{"nexthop":"nims:sengen"},{"nexthop":"kantetsu:nims"}]
+	},
+	{
 		"busStop":"nims:sengen",
 		"ja":"千現",
 		"en":"Sengen",
-		"transit":"none"
+		"ascending":[{"nexthop":"tsukuba"}],
+		"descending":[{"nexthop":"nims:namiki"}]
 	},
 	{
 		"busStop":"nims:namiki",
 		"ja":"並木",
 		"en":"Namiki",
-		"transit":"nims:sengen"
+		"ascending":[{"nexthop":"nims:sengen"}],
+		"descending":[]
 	},
 	{
 		"busStop":"nims:sakura",
 		"ja":"桜",
 		"en":"Sakura",
-		"transit":"nims:tsukuba"
-	},
-	{
-		"busStop":"nims:tsukuba",
-		"ja":"つくば",
-		"en":"Tsukuba",
-		"transit":"nims:sengen"
+		"ascending":[{"nexthop":"tsukuba"}],
+		"descending":[]
 	},
 	{
 		"busStop":"kantetsu:tsukubaHospital",
 		"ja":"つくば大学病院",
 		"en":"Tsukuba UNIV. hospital",
-		"transit":"none"
+		"ascending":[],
+		"descending":[{"nexthop":"tsukuba"}]
 	},
 	{
 		"busStop":"kantetsu:nims",
 		"ja":"物質・材料研究機構 筑波宇宙センター",
 		"en":"National Institute for Materias Science, Tsukuba Space center",
-		"transit":"none"
+		"ascending":[{"nexthop":"tsukuba"}],
+		"descending":[{"nexthop":"kantetsu:gakuenNamiki"}]
 	},
 	{
 		"busStop":"kantetsu:gakuenNamiki",
 		"ja":"学園並木",
 		"en":"Gakuen namiki",
-		"transit":"none"
+		"ascending":[{"nexthop":"kantetsu:nims"}],
+		"descending":[{"nexthop":"kantetsu:arakawaOki"}]
 	},
 	{
 		"busStop":"kantetsu:arakawaOki",
 		"ja":"荒川沖駅",
 		"en":"Arakawa oki Sta.",
-		"transit":"none"
+		"ascending":[{"nexthop":"kantetsu:gakuenNamiki"}],
+		"descending":[]
 	}
 ]
