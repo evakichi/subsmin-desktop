@@ -1,7 +1,7 @@
 {
 	"busType":"nims",
 	"from":"nims:namiki",
-	"to":"nims:tsukuba",
+	"to":"tsukuba",
 	"departureOrArrival":"arrival",
 	"direction":"none",
 	"time":"0930"
