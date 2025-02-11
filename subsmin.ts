@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { finished } from "stream";
 
 type BusType = {
 	busType: string;
@@ -366,27 +367,153 @@ function isContainBusStop(memory:string[],condition:string):boolean{
 	return false;
 };
 
-function dfs(busStopArray:BusStop[],from:string,to:string,memory:string[]):string[]{
-	let stringArray:string[]=[];
-	console.table(memory);
-	const nextHops = getNextHops(busStopArray,from);
-	console.log(from+"->"+to);
-	console.log(nextHops);
-	for (let hops of nextHops){
-		console.log(memory);
-		console.log(hops);
-		if(memory.includes(hops)){
-			console.log(hops+" continue");
-			continue;
-		}
-		memory[memory.length]=hops;
-		console.log("dfs");
-		return dfs(busStopArray,hops,to,memory);	
+function getAscendingNodesMatrix(busStopArray:BusStop[],nodes:string[]):number[][]{
+	let matrix:number[][]=[];
+
+	for (let outer = 0 ; outer < nodes.length ; outer++){
+		matrix[outer]=[];
+		for (let inner = 0 ; inner < nodes.length ; inner++){
+			matrix[outer][inner]=0;
+		};
 	};
-	console.log("Memory");
-	return memory;
+
+	for(let outer = 0; outer < nodes.length ; outer++){
+		for (let asceding of busStopArray[outer].ascending){
+			matrix[outer][nodes.indexOf(asceding.nexthop)]=1
+		};
+	};
+	return matrix;
 };
-const hops:string[] = dfs(targetBusStopArray,"nims:namiki","nims:sakura",["nims:namiki"]);
+
+
+function getDescendingNodesMatrix(busStopArray:BusStop[],nodes:string[]):number[][]{
+	let matrix:number[][]=[];
+
+	for (let outer = 0 ; outer < nodes.length ; outer++){
+		matrix[outer]=[];
+		for (let inner = 0 ; inner < nodes.length ; inner++){
+			matrix[outer][inner]=0;
+		};
+	};
+
+	for(let outer = 0; outer < nodes.length ; outer++){
+		for (let desceding of busStopArray[outer].descending){
+			matrix[outer][nodes.indexOf(desceding.nexthop)]=1
+		};
+	};
+	return matrix;
+};
+
+function getAllNodes(busStopArray:BusStop[]):string[]{
+	let nodes:string[]=[];
+	for (let busStop of busStopArray){
+		nodes[nodes.length]=busStop.busStop;
+	};
+	return nodes;
+};
+
+type Route = {
+	exist:boolean;
+	route:string[];
+};
+
+function dfs(nodes:string[],matrix:number[][],v:number,seen:boolean[],finish:boolean[],routeStringMatrix:String[][],routeStringArray:string[]):boolean{
+	seen[v]=true;
+	routeStringArray.push(nodes[v]);
+	//console.log(routeStringArray);
+	const routeStringMatrixIndex=routeStringMatrix.length;
+	routeStringMatrix[routeStringMatrixIndex]=[];
+	for (let routeString of routeStringArray){
+		routeStringMatrix[routeStringMatrixIndex][routeStringMatrix[routeStringMatrixIndex].length]=routeString;
+	};
+	//console.table(routeStringMatrix);
+	const edge:number[]=matrix[v];
+	//console.table(edge);
+	for(let index = 0; index < edge.length ; index++){
+		if(edge[index]!==0){
+			const v2:number = index;
+			//console.log("v2:"+v2);
+			if (finish[v2]) {
+				continue;
+			}
+			if (seen[v2] && !finish[v2]){
+				routeStringArray.push(nodes[v2]);
+				return true;
+			};
+			if(dfs(nodes,matrix,v2,seen,finish,routeStringMatrix,routeStringArray)){
+				return true;
+			};
+		};
+	};
+	//console.log("finish:"+v);
+	//console.table(finish);
+	finish[v]=true;
+	routeStringArray.pop();
+	return false;
+};
+
+function findRoute(nodes:string[],ascendingMatrix:number[][],descendingMatrix:number[][],from:string,to:string){
+
+	let candidates:string[][]=[];
+	let prevTargetBusStopStringArray:string[]=[];
+	
+	for(let node of nodes){
+		let seen:boolean[]=[];
+		let finish:boolean[]=[];
+		console.log(node);
+		console.log("*****ascnding*****");
+		for (let index = 0; index < nodes.length; index++){
+			seen[index]=false;
+			finish[index]=false;
+		};
+		let ascendingRouteStringMatrix:string[][]=[];
+		let ascendingRouteStringArray:string[]=[];
+		if(node!==to){
+			const ascendingResult:boolean= dfs(nodes,ascendingMatrix,nodes.indexOf(node),seen,finish,ascendingRouteStringMatrix,ascendingRouteStringArray);
+		}
+
+		for (let ascending of ascendingRouteStringMatrix){
+			if (ascending.includes(to)){
+				candidates.push(ascending);
+			};
+		}
+
+		console.log("*****descnding*****");
+		for (let index = 0; index < nodes.length; index++){
+			seen[index]=false;
+			finish[index]=false;
+		};
+		let descendingRouteStringMatrix:string[][]=[];
+		let descendingRouteStringArray:string[]=[];
+		if(node!==to){
+			const descendingResult:boolean= dfs(nodes,descendingMatrix,nodes.indexOf(node),seen,finish,descendingRouteStringMatrix,descendingRouteStringArray);
+		}
+
+		for (let descending of descendingRouteStringMatrix){
+			if (descending.includes(to)){
+				candidates.push(descending);
+			};
+		}
+	};
+	
+	console.table(candidates);
+	for (let candidate of candidates){
+		if (!prevTargetBusStopStringArray.includes(candidate[0])){
+			prevTargetBusStopStringArray[prevTargetBusStopStringArray.length]=candidate[0];
+		}
+	};
+	
+	console.table(prevTargetBusStopStringArray);
+};
+
+function find(busStopArray:BusStop[],from:string,to:string){
+	const nodes:string[]=getAllNodes(busStopArray);
+	const ascendingMatrix:number[][]=getAscendingNodesMatrix(busStopArray,nodes);
+	const descendingMatrix:number[][]=getDescendingNodesMatrix(busStopArray,nodes);
+	findRoute(nodes,ascendingMatrix,descendingMatrix,from,to);
+};
+find(targetBusStopArray,"nims:namiki","nims:sakura");
+//const hops:string[] = dfs(busStopArray,"nims:namiki","nims:sakura",["nims:namiki"]);
 //console.table(hops);
 //const next = getBusTimetable(targetBusTimetableArray,searchCondition);
 //printBusTimetableArray("next:",searchCondition,next);
@@ -545,12 +672,6 @@ function createDescendingNetworkGraph(busStopArray:BusStop[]):number[][]{
 	};
 	return graph;
 };
-
-printNextHop(targetBusStopArray);
-const ascendingGraph:number[][] = createAscendingNetworkGraph(targetBusStopArray);
-console.table(ascendingGraph);
-const descendingGraph:number[][] = createDescendingNetworkGraph(targetBusStopArray);
-console.table(descendingGraph);
 
 function calcWeight(from:string,to:string):number[]{
 	const INF:number = Number.MAX_SAFE_INTEGER;

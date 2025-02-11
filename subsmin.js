@@ -360,30 +360,165 @@ function isContainBusStop(memory, condition) {
     return false;
 }
 ;
-function dfs(busStopArray, from, to, memory) {
-    var stringArray = [];
-    console.table(memory);
-    var nextHops = getNextHops(busStopArray, from);
-    console.log(from + "->" + to);
-    console.log(nextHops);
-    for (var _i = 0, nextHops_1 = nextHops; _i < nextHops_1.length; _i++) {
-        var hops_1 = nextHops_1[_i];
-        console.log(memory);
-        console.log(hops_1);
-        if (memory.includes(hops_1)) {
-            console.log(hops_1 + " continue");
-            continue;
+function getAscendingNodesMatrix(busStopArray, nodes) {
+    var matrix = [];
+    for (var outer = 0; outer < nodes.length; outer++) {
+        matrix[outer] = [];
+        for (var inner = 0; inner < nodes.length; inner++) {
+            matrix[outer][inner] = 0;
         }
-        memory[memory.length] = hops_1;
-        console.log("dfs");
-        return dfs(busStopArray, hops_1, to, memory);
+        ;
     }
     ;
-    console.log("Memory");
-    return memory;
+    for (var outer = 0; outer < nodes.length; outer++) {
+        for (var _i = 0, _a = busStopArray[outer].ascending; _i < _a.length; _i++) {
+            var asceding = _a[_i];
+            matrix[outer][nodes.indexOf(asceding.nexthop)] = 1;
+        }
+        ;
+    }
+    ;
+    return matrix;
 }
 ;
-var hops = dfs(targetBusStopArray, "nims:namiki", "nims:sakura", ["nims:namiki"]);
+function getDescendingNodesMatrix(busStopArray, nodes) {
+    var matrix = [];
+    for (var outer = 0; outer < nodes.length; outer++) {
+        matrix[outer] = [];
+        for (var inner = 0; inner < nodes.length; inner++) {
+            matrix[outer][inner] = 0;
+        }
+        ;
+    }
+    ;
+    for (var outer = 0; outer < nodes.length; outer++) {
+        for (var _i = 0, _a = busStopArray[outer].descending; _i < _a.length; _i++) {
+            var desceding = _a[_i];
+            matrix[outer][nodes.indexOf(desceding.nexthop)] = 1;
+        }
+        ;
+    }
+    ;
+    return matrix;
+}
+;
+function getAllNodes(busStopArray) {
+    var nodes = [];
+    for (var _i = 0, busStopArray_4 = busStopArray; _i < busStopArray_4.length; _i++) {
+        var busStop = busStopArray_4[_i];
+        nodes[nodes.length] = busStop.busStop;
+    }
+    ;
+    return nodes;
+}
+;
+function dfs(nodes, matrix, v, seen, finish, routeStringMatrix, routeStringArray) {
+    seen[v] = true;
+    routeStringArray.push(nodes[v]);
+    //console.log(routeStringArray);
+    var routeStringMatrixIndex = routeStringMatrix.length;
+    routeStringMatrix[routeStringMatrixIndex] = [];
+    for (var _i = 0, routeStringArray_1 = routeStringArray; _i < routeStringArray_1.length; _i++) {
+        var routeString = routeStringArray_1[_i];
+        routeStringMatrix[routeStringMatrixIndex][routeStringMatrix[routeStringMatrixIndex].length] = routeString;
+    }
+    ;
+    //console.table(routeStringMatrix);
+    var edge = matrix[v];
+    //console.table(edge);
+    for (var index = 0; index < edge.length; index++) {
+        if (edge[index] !== 0) {
+            var v2 = index;
+            //console.log("v2:"+v2);
+            if (finish[v2]) {
+                continue;
+            }
+            if (seen[v2] && !finish[v2]) {
+                routeStringArray.push(nodes[v2]);
+                return true;
+            }
+            ;
+            if (dfs(nodes, matrix, v2, seen, finish, routeStringMatrix, routeStringArray)) {
+                return true;
+            }
+            ;
+        }
+        ;
+    }
+    ;
+    //console.log("finish:"+v);
+    //console.table(finish);
+    finish[v] = true;
+    routeStringArray.pop();
+    return false;
+}
+;
+function findRoute(nodes, ascendingMatrix, descendingMatrix, from, to) {
+    var candidates = [];
+    var prevTargetBusStopStringArray = [];
+    for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
+        var node = nodes_1[_i];
+        var seen = [];
+        var finish = [];
+        console.log(node);
+        console.log("*****ascnding*****");
+        for (var index = 0; index < nodes.length; index++) {
+            seen[index] = false;
+            finish[index] = false;
+        }
+        ;
+        var ascendingRouteStringMatrix = [];
+        var ascendingRouteStringArray = [];
+        if (node !== to) {
+            var ascendingResult = dfs(nodes, ascendingMatrix, nodes.indexOf(node), seen, finish, ascendingRouteStringMatrix, ascendingRouteStringArray);
+        }
+        for (var _a = 0, ascendingRouteStringMatrix_1 = ascendingRouteStringMatrix; _a < ascendingRouteStringMatrix_1.length; _a++) {
+            var ascending = ascendingRouteStringMatrix_1[_a];
+            if (ascending.includes(to)) {
+                candidates.push(ascending);
+            }
+            ;
+        }
+        console.log("*****descnding*****");
+        for (var index = 0; index < nodes.length; index++) {
+            seen[index] = false;
+            finish[index] = false;
+        }
+        ;
+        var descendingRouteStringMatrix = [];
+        var descendingRouteStringArray = [];
+        if (node !== to) {
+            var descendingResult = dfs(nodes, descendingMatrix, nodes.indexOf(node), seen, finish, descendingRouteStringMatrix, descendingRouteStringArray);
+        }
+        for (var _b = 0, descendingRouteStringMatrix_1 = descendingRouteStringMatrix; _b < descendingRouteStringMatrix_1.length; _b++) {
+            var descending = descendingRouteStringMatrix_1[_b];
+            if (descending.includes(to)) {
+                candidates.push(descending);
+            }
+            ;
+        }
+    }
+    ;
+    console.table(candidates);
+    for (var _c = 0, candidates_1 = candidates; _c < candidates_1.length; _c++) {
+        var candidate = candidates_1[_c];
+        if (!prevTargetBusStopStringArray.includes(candidate[0])) {
+            prevTargetBusStopStringArray[prevTargetBusStopStringArray.length] = candidate[0];
+        }
+    }
+    ;
+    console.table(prevTargetBusStopStringArray);
+}
+;
+function find(busStopArray, from, to) {
+    var nodes = getAllNodes(busStopArray);
+    var ascendingMatrix = getAscendingNodesMatrix(busStopArray, nodes);
+    var descendingMatrix = getDescendingNodesMatrix(busStopArray, nodes);
+    findRoute(nodes, ascendingMatrix, descendingMatrix, from, to);
+}
+;
+find(targetBusStopArray, "nims:namiki", "nims:sakura");
+//const hops:string[] = dfs(busStopArray,"nims:namiki","nims:sakura",["nims:namiki"]);
 //console.table(hops);
 //const next = getBusTimetable(targetBusTimetableArray,searchCondition);
 //printBusTimetableArray("next:",searchCondition,next);
@@ -471,8 +606,8 @@ printBusTimetableArray("******resrut******",targetSearchCondition,result);
 */
 function searchBusStopIndex(busStopArray, condString) {
     var index = 0;
-    for (var _i = 0, busStopArray_4 = busStopArray; _i < busStopArray_4.length; _i++) {
-        var busStop = busStopArray_4[_i];
+    for (var _i = 0, busStopArray_5 = busStopArray; _i < busStopArray_5.length; _i++) {
+        var busStop = busStopArray_5[_i];
         if (busStop.busStop === condString) {
             return index;
         }
@@ -483,8 +618,8 @@ function searchBusStopIndex(busStopArray, condString) {
 }
 ;
 function printNextHop(busStopArray) {
-    for (var _i = 0, busStopArray_5 = busStopArray; _i < busStopArray_5.length; _i++) {
-        var busStop = busStopArray_5[_i];
+    for (var _i = 0, busStopArray_6 = busStopArray; _i < busStopArray_6.length; _i++) {
+        var busStop = busStopArray_6[_i];
         console.log(busStop);
     }
     ;
@@ -500,8 +635,8 @@ function createAscendingNetworkGraph(busStopArray) {
         ;
     }
     ;
-    for (var _i = 0, busStopArray_6 = busStopArray; _i < busStopArray_6.length; _i++) {
-        var busStop = busStopArray_6[_i];
+    for (var _i = 0, busStopArray_7 = busStopArray; _i < busStopArray_7.length; _i++) {
+        var busStop = busStopArray_7[_i];
         var resultOuterIndex = searchBusStopIndex(busStopArray, busStop.busStop);
         if (resultOuterIndex !== -1) {
             for (var _a = 0, _b = busStop.ascending; _a < _b.length; _a++) {
@@ -528,8 +663,8 @@ function createDescendingNetworkGraph(busStopArray) {
         ;
     }
     ;
-    for (var _i = 0, busStopArray_7 = busStopArray; _i < busStopArray_7.length; _i++) {
-        var busStop = busStopArray_7[_i];
+    for (var _i = 0, busStopArray_8 = busStopArray; _i < busStopArray_8.length; _i++) {
+        var busStop = busStopArray_8[_i];
         var resultOuterIndex = searchBusStopIndex(busStopArray, busStop.busStop);
         if (resultOuterIndex !== -1) {
             for (var _a = 0, _b = busStop.descending; _a < _b.length; _a++) {
@@ -546,11 +681,6 @@ function createDescendingNetworkGraph(busStopArray) {
     return graph;
 }
 ;
-printNextHop(targetBusStopArray);
-var ascendingGraph = createAscendingNetworkGraph(targetBusStopArray);
-console.table(ascendingGraph);
-var descendingGraph = createDescendingNetworkGraph(targetBusStopArray);
-console.table(descendingGraph);
 function calcWeight(from, to) {
     var INF = Number.MAX_SAFE_INTEGER;
     return [];
