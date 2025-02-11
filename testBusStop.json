@@ -18,7 +18,7 @@
 		"ja":"並木",
 		"en":"Namiki",
 		"ascending":[{"nexthop":"nims:sengen"}],
-		"descending":[]
+		"descending":[{"nexthop":"kantetsu:nims"}]
 	},
 	{
 		"busStop":"nims:sakura",
@@ -38,7 +38,7 @@
 		"busStop":"kantetsu:nims",
 		"ja":"物質・材料研究機構 筑波宇宙センター",
 		"en":"National Institute for Materias Science, Tsukuba Space center",
-		"ascending":[{"nexthop":"tsukuba"}],
+		"ascending":[{"nexthop":"tsukuba"},{"nexthop":"nims:namiki"}],
 		"descending":[{"nexthop":"kantetsu:gakuenNamiki"}]
 	},
 	{

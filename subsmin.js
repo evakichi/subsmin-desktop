@@ -65,10 +65,6 @@ function getNextHops(edge) {
 function dfs(nodes, matrix, v, to, from, seen, finish, route) {
     seen[v] = true;
     route.push(nodes[v]);
-    if (v === to) {
-        return true;
-    }
-    ;
     var edge = getNextHops(matrix[v]);
     for (var _i = 0, edge_1 = edge; _i < edge_1.length; _i++) {
         var v2 = edge_1[_i];
@@ -92,6 +88,11 @@ function dfs(nodes, matrix, v, to, from, seen, finish, route) {
     }
     ;
     finish[v] = true;
+    if (v === to) {
+        printBusRouteMatrix("BUS ROUTE", nodes, matrix);
+        return true;
+    }
+    ;
     route.pop();
     return false;
 }
@@ -144,7 +145,6 @@ function find(busStopArray, busTimetableArray, searchCondition) {
             };
             var lessEqualThanArrivalTimetableArray = extractLessEqualThanArrivalBusTimetableArray(busTimetableArray, reSearchCondition);
             var sortedLessEqualThanArrivalTimetableArray = sortingArrivalBusTimetableArray(lessEqualThanArrivalTimetableArray, reSearchCondition);
-            printBusTimetableArray("*****", reSearchCondition, sortedLessEqualThanArrivalTimetableArray);
             if (sortedLessEqualThanArrivalTimetableArray.length === 0) {
                 return [];
             }
@@ -166,8 +166,6 @@ function find(busStopArray, busTimetableArray, searchCondition) {
     }
     else if (searchCondition.departureOrArrival === "departure") {
         var departureRouteArray = route;
-        console.log("########################################################################");
-        console.table(departureRouteArray);
         var time = searchCondition.time;
         var index = 0;
         var to = "";
@@ -191,7 +189,6 @@ function find(busStopArray, busTimetableArray, searchCondition) {
             };
             var graterEqualThanArrivalTimetableArray = extractGraterEqualThanDepartureBusTimetableArray(busTimetableArray, reSearchCondition);
             var sortedGraterEqualThanArrivalTimetableArray = sortingDepartureBusTimetableArray(graterEqualThanArrivalTimetableArray, reSearchCondition);
-            printBusTimetableArray("*****", reSearchCondition, sortedGraterEqualThanArrivalTimetableArray);
             if (sortedGraterEqualThanArrivalTimetableArray.length === 0) {
                 return [];
             }
@@ -224,6 +221,15 @@ function printBusTimetableArray(str, searchCondition, busTimetableArray) {
         var busTimetable = busTimetableArray_1[_i];
         console.log(busTimetable);
     }
+    console.log(str + ":finish");
+}
+;
+function printBusRouteMatrix(str, nodes, matrix) {
+    console.log(str + ":start");
+    console.log("*****nodes*****");
+    console.table(nodes);
+    console.log("+++++nodes+++++");
+    console.table(matrix);
     console.log(str + ":finish");
 }
 ;
