@@ -87,26 +87,6 @@ function swapBusTimetable(specifiedBusTimetableArray:BusTimetable[],i:number,j:n
 	specifiedBusTimetableArray[j] = tmpSpecifiedBusTimetable;
 };
 
-function getArrivalTimeString(timeTableArray:Timetable[],searchCondition:SearchCondition):string{
-	let specifiedTime:string = "none";
-	for (let timetable of timeTableArray){
-		if (timetable.busStop === searchCondition.to && timetable.arrival !== "none"){
-			specifiedTime = timetable.arrival;
-		}
-	}	
-	return specifiedTime;
-};
-
-function getDepartureTimeString(timeTableArray:Timetable[],searchCondition:SearchCondition):string{
-	let specifiedTime:string = "none";
-	for (let timetable of timeTableArray){
-		if (timetable.busStop === searchCondition.from && timetable.departure !== "none"){
-			specifiedTime = timetable.departure;
-		}
-	}	
-	return specifiedTime;
-};
-
 function extractLessEqualThanArrivalBusTimetableArray(busTimetableArray: BusTimetable[],searchCondition:SearchCondition): BusTimetable[] {
 
 	let specifiedBusTimetableArray: BusTimetable[] = [];
@@ -264,7 +244,7 @@ function find(busStopArray:BusStop[],busTimetableArray:BusTimetable[],searchCond
 				return [];
 			};
 			tmpResultBusTimetableArray[tmpResultBusTimetableArray.length]=sortedLessEqualThanArrivalTimetableArray[0];
-			time = getDepartureTime(sortedLessEqualThanArrivalTimetableArray[0].timetable,reSearchCondition);
+			time = getDepartureTimeString(sortedLessEqualThanArrivalTimetableArray[0].timetable,reSearchCondition);
 			to = from;
 		};
 	};
@@ -279,7 +259,7 @@ function find(busStopArray:BusStop[],busTimetableArray:BusTimetable[],searchCond
 
 const busTimetableArray = find(targetBusStopArray,targetBusTimetableArray,targetSearchCondition);
 printBusTimetableArray("*****result*****",targetSearchCondition,busTimetableArray);
-function getArrivalTime(timeTableArray:Timetable[],searchCondition:SearchCondition):string{
+function getArrivalTimeString(timeTableArray:Timetable[],searchCondition:SearchCondition):string{
 	for(let timetable of timeTableArray){
 		if (timetable.busStop === searchCondition.to && timetable.arrival !== "none"){
 			console.log("busstop from "+timetable.arrival);
@@ -289,7 +269,7 @@ function getArrivalTime(timeTableArray:Timetable[],searchCondition:SearchConditi
 	return "none";
 };
 
-function getDepartureTime(timeTableArray:Timetable[],searchCondition:SearchCondition):string{
+function getDepartureTimeString(timeTableArray:Timetable[],searchCondition:SearchCondition):string{
 	for(let timetable of timeTableArray){
 		if (timetable.busStop === searchCondition.from && timetable.departure !== "none"){
 			console.log("busstop from "+timetable.departure);
@@ -302,8 +282,8 @@ function getDepartureTime(timeTableArray:Timetable[],searchCondition:SearchCondi
 function extractLessEqualThanArrivalBusTimetableArray2(busTimetableArray:BusTimetable[],searchCondition:SearchCondition):BusTimetable[]{
 	let specifiedBusTimetableArray:BusTimetable[]=[];
 	for (let busTimeTable of busTimetableArray){
-		const departureTime:string=getDepartureTime(busTimeTable.timetable,searchCondition);
-		const arrivalTime:string=getArrivalTime(busTimeTable.timetable,searchCondition);
+		const departureTime:string=getDepartureTimeString(busTimeTable.timetable,searchCondition);
+		const arrivalTime:string=getArrivalTimeString(busTimeTable.timetable,searchCondition);
 		if (departureTime!=="none" && arrivalTime!=="none" && toTime(arrivalTime)>toTime(departureTime) && toTime(searchCondition.time)>=toTime(arrivalTime)){
 			specifiedBusTimetableArray[specifiedBusTimetableArray.length]=busTimeTable;
 		};

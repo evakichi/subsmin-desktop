@@ -36,28 +36,6 @@ function swapBusTimetable(specifiedBusTimetableArray, i, j) {
     specifiedBusTimetableArray[j] = tmpSpecifiedBusTimetable;
 }
 ;
-function getArrivalTimeString(timeTableArray, searchCondition) {
-    var specifiedTime = "none";
-    for (var _i = 0, timeTableArray_1 = timeTableArray; _i < timeTableArray_1.length; _i++) {
-        var timetable = timeTableArray_1[_i];
-        if (timetable.busStop === searchCondition.to && timetable.arrival !== "none") {
-            specifiedTime = timetable.arrival;
-        }
-    }
-    return specifiedTime;
-}
-;
-function getDepartureTimeString(timeTableArray, searchCondition) {
-    var specifiedTime = "none";
-    for (var _i = 0, timeTableArray_2 = timeTableArray; _i < timeTableArray_2.length; _i++) {
-        var timetable = timeTableArray_2[_i];
-        if (timetable.busStop === searchCondition.from && timetable.departure !== "none") {
-            specifiedTime = timetable.departure;
-        }
-    }
-    return specifiedTime;
-}
-;
 function extractLessEqualThanArrivalBusTimetableArray(busTimetableArray, searchCondition) {
     var specifiedBusTimetableArray = [];
     for (var _i = 0, busTimetableArray_2 = busTimetableArray; _i < busTimetableArray_2.length; _i++) {
@@ -226,7 +204,7 @@ function find(busStopArray, busTimetableArray, searchCondition) {
             }
             ;
             tmpResultBusTimetableArray[tmpResultBusTimetableArray.length] = sortedLessEqualThanArrivalTimetableArray[0];
-            time = getDepartureTime(sortedLessEqualThanArrivalTimetableArray[0].timetable, reSearchCondition);
+            time = getDepartureTimeString(sortedLessEqualThanArrivalTimetableArray[0].timetable, reSearchCondition);
             to = from;
         }
         ;
@@ -245,9 +223,9 @@ function find(busStopArray, busTimetableArray, searchCondition) {
 ;
 var busTimetableArray = find(targetBusStopArray, targetBusTimetableArray, targetSearchCondition);
 printBusTimetableArray("*****result*****", targetSearchCondition, busTimetableArray);
-function getArrivalTime(timeTableArray, searchCondition) {
-    for (var _i = 0, timeTableArray_3 = timeTableArray; _i < timeTableArray_3.length; _i++) {
-        var timetable = timeTableArray_3[_i];
+function getArrivalTimeString(timeTableArray, searchCondition) {
+    for (var _i = 0, timeTableArray_1 = timeTableArray; _i < timeTableArray_1.length; _i++) {
+        var timetable = timeTableArray_1[_i];
         if (timetable.busStop === searchCondition.to && timetable.arrival !== "none") {
             console.log("busstop from " + timetable.arrival);
             return timetable.arrival;
@@ -258,9 +236,9 @@ function getArrivalTime(timeTableArray, searchCondition) {
     return "none";
 }
 ;
-function getDepartureTime(timeTableArray, searchCondition) {
-    for (var _i = 0, timeTableArray_4 = timeTableArray; _i < timeTableArray_4.length; _i++) {
-        var timetable = timeTableArray_4[_i];
+function getDepartureTimeString(timeTableArray, searchCondition) {
+    for (var _i = 0, timeTableArray_2 = timeTableArray; _i < timeTableArray_2.length; _i++) {
+        var timetable = timeTableArray_2[_i];
         if (timetable.busStop === searchCondition.from && timetable.departure !== "none") {
             console.log("busstop from " + timetable.departure);
             return timetable.departure;
@@ -275,8 +253,8 @@ function extractLessEqualThanArrivalBusTimetableArray2(busTimetableArray, search
     var specifiedBusTimetableArray = [];
     for (var _i = 0, busTimetableArray_3 = busTimetableArray; _i < busTimetableArray_3.length; _i++) {
         var busTimeTable = busTimetableArray_3[_i];
-        var departureTime = getDepartureTime(busTimeTable.timetable, searchCondition);
-        var arrivalTime = getArrivalTime(busTimeTable.timetable, searchCondition);
+        var departureTime = getDepartureTimeString(busTimeTable.timetable, searchCondition);
+        var arrivalTime = getArrivalTimeString(busTimeTable.timetable, searchCondition);
         if (departureTime !== "none" && arrivalTime !== "none" && toTime(arrivalTime) > toTime(departureTime) && toTime(searchCondition.time) >= toTime(arrivalTime)) {
             specifiedBusTimetableArray[specifiedBusTimetableArray.length] = busTimeTable;
         }
