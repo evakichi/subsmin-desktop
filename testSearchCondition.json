@@ -2,7 +2,7 @@
 	"busType":"nims",
 	"from":"nims:namiki",
 	"to":"nims:sakura",
-	"departureOrArrival":"arrival",
+	"departureOrArrival":"departure",
 	"direction":"none",
 	"time":"1200"
 }
