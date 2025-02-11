@@ -1,5 +1,9 @@
 import * as fs from "fs";
+import { console } from "inspector";
 import { finished } from "stream";
+
+
+console.log("******");
 
 type BusType = {
 	busType: string;
@@ -404,6 +408,30 @@ function getDescendingNodesMatrix(busStopArray:BusStop[],nodes:string[]):number[
 	return matrix;
 };
 
+function getNodesMatrix(busStopArray:BusStop[],nodes:string[]):number[][]{
+	let matrix:number[][]=[];
+
+	for (let outer = 0 ; outer < nodes.length ; outer++){
+		matrix[outer]=[];
+		for (let inner = 0 ; inner < nodes.length ; inner++){
+			matrix[outer][inner]=0;
+		};
+	};
+
+	for(let outer = 0; outer < nodes.length ; outer++){
+		for (let asceding of busStopArray[outer].ascending){
+			matrix[outer][nodes.indexOf(asceding.nexthop)]=1
+		};
+	};
+
+	for(let outer = 0; outer < nodes.length ; outer++){
+		for (let desceding of busStopArray[outer].descending){
+			matrix[outer][nodes.indexOf(desceding.nexthop)]=1
+		};
+	};
+	return matrix;
+};
+
 function getAllNodes(busStopArray:BusStop[]):string[]{
 	let nodes:string[]=[];
 	for (let busStop of busStopArray){
@@ -417,7 +445,36 @@ type Route = {
 	route:string[];
 };
 
-function dfs(nodes:string[],matrix:number[][],v:number,seen:boolean[],finish:boolean[],routeStringMatrix:String[][],routeStringArray:string[]):boolean{
+function detactLoop(nodes:string[],matrix:number[][],v:number,seen:boolean[],finish:boolean[],postLoop:number[]):boolean{
+	seen[v]=true;
+	//console.log(routeStringArray);
+	//console.table(routeStringMatrix);
+	const edge:number[]=matrix[v];
+	console.table(edge);
+	for(let index = 0; index < edge.length ; index++){
+		if(edge[index]!==0){
+			const v2:number = index;
+			//console.log("v2:"+v2);
+			if (finish[v2]) {
+				continue;
+			}
+			if (seen[v2] && !finish[v2]){
+				postLoop.push(v2);
+				return true;
+			};
+			if(detactLoop(nodes,matrix,v2,seen,finish,postLoop)){
+				return true;
+			};
+		};
+	};
+	//console.log("finish:"+v);
+	//console.table(finish);
+	finish[v]=true;
+	postLoop.pop();
+	return false;
+};
+
+function dfs(nodes:string[],matrix:number[][],v:number,f:number,seen:boolean[],finish:boolean[],routeStringMatrix:String[][],routeStringArray:string[]):boolean{
 	seen[v]=true;
 	routeStringArray.push(nodes[v]);
 	//console.log(routeStringArray);
@@ -438,9 +495,10 @@ function dfs(nodes:string[],matrix:number[][],v:number,seen:boolean[],finish:boo
 			}
 			if (seen[v2] && !finish[v2]){
 				routeStringArray.push(nodes[v2]);
+				console.table(routeStringArray);
 				return true;
 			};
-			if(dfs(nodes,matrix,v2,seen,finish,routeStringMatrix,routeStringArray)){
+			if(dfs(nodes,matrix,v2,f,seen,finish,routeStringMatrix,routeStringArray)){
 				return true;
 			};
 		};
@@ -452,48 +510,67 @@ function dfs(nodes:string[],matrix:number[][],v:number,seen:boolean[],finish:boo
 	return false;
 };
 
-function findRoute(nodes:string[],ascendingMatrix:number[][],descendingMatrix:number[][],from:string,to:string){
+function findRoute(nodes:string[],ascendingMatrix:number[][],descendingMatrix:number[][],matrix:number[][],from:string,to:string):string[]{
 
 	let candidates:string[][]=[];
 	let prevTargetBusStopStringArray:string[]=[];
-	
-	for(let node of nodes){
-		let seen:boolean[]=[];
-		let finish:boolean[]=[];
-		console.log(node);
-		console.log("*****ascnding*****");
+
+	let seen:boolean[]=[];
+	let finish:boolean[]=[];
+	console.log(from);
+	console.table(nodes);
+	console.log("*****ascnding*****");
+	console.table(matrix);
 		for (let index = 0; index < nodes.length; index++){
 			seen[index]=false;
 			finish[index]=false;
 		};
 		let ascendingRouteStringMatrix:string[][]=[];
 		let ascendingRouteStringArray:string[]=[];
-		if(node!==to){
-			const ascendingResult:boolean= dfs(nodes,ascendingMatrix,nodes.indexOf(node),seen,finish,ascendingRouteStringMatrix,ascendingRouteStringArray);
-		}
+		let postLoop:number[]=[];
+		//const ascendingResult:boolean= detactLoop(nodes,matrix,nodes.indexOf(from),seen,finish,postLoop);
+		//console.log(ascendingResult);
+		console.table(postLoop);
+		return[];
+	for(let node of nodes){
+		let seen:boolean[]=[];
+		let finish:boolean[]=[];
+		console.log(node);
+		console.log("*****ascnding*****");
 
-		for (let ascending of ascendingRouteStringMatrix){
-			if (ascending.includes(to)){
-				candidates.push(ascending);
+		if(node!==to){
+			for (let index = 0; index < nodes.length; index++){
+				seen[index]=false;
+				finish[index]=false;
 			};
+			let ascendingRouteStringMatrix:string[][]=[];
+			let ascendingRouteStringArray:string[]=[];
+			//const ascendingResult:boolean= dfs(nodes,ascendingMatrix,nodes.indexOf(node),seen,finish,ascendingRouteStringMatrix,ascendingRouteStringArray);
+
+			for (let ascending of ascendingRouteStringMatrix){
+				if (ascending.includes(to)){
+					candidates.push(ascending);
+				};
+			}
 		}
+		console.table(candidates);
 
 		console.log("*****descnding*****");
-		for (let index = 0; index < nodes.length; index++){
-			seen[index]=false;
-			finish[index]=false;
-		};
-		let descendingRouteStringMatrix:string[][]=[];
-		let descendingRouteStringArray:string[]=[];
 		if(node!==to){
-			const descendingResult:boolean= dfs(nodes,descendingMatrix,nodes.indexOf(node),seen,finish,descendingRouteStringMatrix,descendingRouteStringArray);
-		}
-
-		for (let descending of descendingRouteStringMatrix){
-			if (descending.includes(to)){
-				candidates.push(descending);
+			for (let index = 0; index < nodes.length; index++){
+				seen[index]=false;
+				finish[index]=false;
 			};
+			let descendingRouteStringMatrix:string[][]=[];
+			let descendingRouteStringArray:string[]=[];
+			//const descendingResult:boolean= dfs(nodes,descendingMatrix,nodes.indexOf(node),seen,finish,descendingRouteStringMatrix,descendingRouteStringArray);
+			for (let descending of descendingRouteStringMatrix){
+				if (descending.includes(to)){
+					candidates.push(descending);
+				};
+			}	
 		}
+		console.table(candidates);
 	};
 	
 	console.table(candidates);
@@ -503,15 +580,19 @@ function findRoute(nodes:string[],ascendingMatrix:number[][],descendingMatrix:nu
 		}
 	};
 	
-	console.table(prevTargetBusStopStringArray);
+	console.table(prevTargetBusStopStringArray);	
+	return prevTargetBusStopStringArray;
 };
 
 function find(busStopArray:BusStop[],from:string,to:string){
 	const nodes:string[]=getAllNodes(busStopArray);
 	const ascendingMatrix:number[][]=getAscendingNodesMatrix(busStopArray,nodes);
 	const descendingMatrix:number[][]=getDescendingNodesMatrix(busStopArray,nodes);
-	findRoute(nodes,ascendingMatrix,descendingMatrix,from,to);
+	const matrix:number[][]=getNodesMatrix(busStopArray,nodes);
+	console.log("test");
+	findRoute(nodes,ascendingMatrix,descendingMatrix,matrix,from,to);
 };
+console.log("******");
 find(targetBusStopArray,"nims:namiki","nims:sakura");
 //const hops:string[] = dfs(busStopArray,"nims:namiki","nims:sakura",["nims:namiki"]);
 //console.table(hops);
