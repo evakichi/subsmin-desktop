@@ -65,6 +65,7 @@ function getNextHops(edge) {
 function dfs(nodes, matrix, v, to, from, seen, finish, route) {
     seen[v] = true;
     route.push(nodes[v]);
+    console.log(route);
     var edge = getNextHops(matrix[v]);
     for (var _i = 0, edge_1 = edge; _i < edge_1.length; _i++) {
         var v2 = edge_1[_i];

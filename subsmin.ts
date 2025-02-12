@@ -112,6 +112,7 @@ function getNextHops(edge:number[]):number[]{
 function dfs(nodes:string[],matrix:number[][],v:number,to:number,from:number,seen:boolean[],finish:boolean[],route:string[]):boolean{
 	seen[v]=true;
 	route.push(nodes[v]);
+	console.log(route);
 	const edge:number[]=getNextHops(matrix[v]);
 	for(let v2 of edge){
 		if (v2 === from){
