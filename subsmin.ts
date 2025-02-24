@@ -113,11 +113,11 @@ function getNextHops(edge:number[]):number[]{
 function dfs(nodes:string[],matrix:number[][],v:number,to:number,seen:boolean[],route:string[]):boolean{
 	seen[v]=true;
 	route.push(nodes[v]);
+	console.log("seen:"+v);
 	if (seen[to]){
 		console.table(route);
 		return true;
 	};
-	console.log("seen:"+v);
 	const edges:number[]=getNextHops(matrix[v]);
 	for(let next_v of edges){
 		if (seen[next_v]){

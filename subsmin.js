@@ -65,12 +65,12 @@ function getNextHops(edge) {
 function dfs(nodes, matrix, v, to, seen, route) {
     seen[v] = true;
     route.push(nodes[v]);
+    console.log("seen:" + v);
     if (seen[to]) {
         console.table(route);
         return true;
     }
     ;
-    console.log("seen:" + v);
     var edges = getNextHops(matrix[v]);
     for (var _i = 0, edges_1 = edges; _i < edges_1.length; _i++) {
         var next_v = edges_1[_i];
