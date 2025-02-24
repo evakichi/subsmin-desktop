@@ -1,5 +1,7 @@
+import { time } from "console";
 import { StartLoggingOptions } from "electron";
 import * as fs from "fs";
+import { maxHeaderSize } from "http";
 
 console.log("******");
 
@@ -110,6 +112,97 @@ function getNextHops(edge:number[]):number[]{
 	return result;
 };
 
+function chmin(a:number,b:number):boolean{
+	if (a>b){
+		a=b;
+		return true;
+	};
+	return false;
+};
+
+
+function getNearestMinutesArray(busTimetableArray:BusTimetable[],nodes:string[],matrix:number[][],pivot:number,time:string):string[]{
+	let nearestMinutesArray:string[]=[];
+	const nextHops:number[]=getNextHops(matrix[pivot]);
+	for (let i = 0; i < nodes.length ; i++ ){
+		nearestMinutesArray[i]="INF";
+	};
+	for (let nextHop of nextHops){
+		const reSearchCondition:SearchCondition={
+			busType:"nimsbus",
+			from:nodes[pivot],
+			to:nodes[nextHop],
+			departureOrArrival:"arrival",
+			direction:"ascending",
+			time:time,
+		};
+		console.log(reSearchCondition.from+"->"+reSearchCondition.to);
+		const graterEqualThanDepartureTimetableArray:BusTimetable[]=extractGraterEqualThanDepartureBusTimetableArray(busTimetableArray,reSearchCondition);
+		const sortedGraterEqualThanDepartureTimetableArray:BusTimetable[]=sortingDepartureBusTimetableArray(graterEqualThanDepartureTimetableArray,reSearchCondition);
+		if (sortedGraterEqualThanDepartureTimetableArray.length!==0){
+			console.log(sortedGraterEqualThanDepartureTimetableArray[0]);
+			console.log(reSearchCondition);	
+			console.log(nextHop);		
+			if(sortedGraterEqualThanDepartureTimetableArray[0].busType==="walk"){
+				console.log("**************************************walk**************************************");
+				const arrivalTime:string = addWalkTime(time,getArrivalTimeString(sortedGraterEqualThanDepartureTimetableArray[0].timetable,reSearchCondition));
+				console.log(arrivalTime);
+				nearestMinutesArray[nextHop]=arrivalTime;
+			}else{
+				console.log("**************************************bus**************************************");
+				const arrivalTime:string=getArrivalTimeString(sortedGraterEqualThanDepartureTimetableArray[0].timetable,reSearchCondition);
+				console.log(arrivalTime);
+				nearestMinutesArray[nextHop]=arrivalTime;
+
+			};
+		};
+	};
+	return nearestMinutesArray;
+};
+
+function dijkstra(nodes:string[],matrix:number[][],s:number,route:string[][],busTimetableArray:BusTimetable[],searchCondition:SearchCondition):string[]{
+	const INF:number = Number.MAX_SAFE_INTEGER;
+	let dist:string[]=[];
+	let used:boolean[]=[];
+	for (let index = 0; index < nodes.length ; index++){
+		used[index] = false;
+		dist[index] = "INF";
+	};
+	console.table(nodes);
+	console.table(matrix);
+	console.log(dist);
+	dist[s]=searchCondition.time;
+	for (let outer = 0 ; outer < dist.length ; outer++){
+
+		let min_dist:string="INF";
+		let min_v:number = -1;
+		for (let v = 0 ; v < dist.length ; v++){
+			if(!used[v] && toTime(dist[v]) < toTime(min_dist)){
+				min_v=v;
+				min_dist=dist[v];
+			};
+		};
+
+		if (min_v === -1){
+			break;
+		};
+		
+		const nearestMinutesArray:string[]=getNearestMinutesArray(busTimetableArray,nodes,matrix,min_v,min_dist);
+		const nextHops:number[]=getNextHops(matrix[min_v]);
+		console.table(nearestMinutesArray);
+		for (let nextHop of nextHops){
+			console.log(nextHop);
+			console.log("dist="+dist[nextHop]+" nearlest="+nearestMinutesArray[nextHop]);
+			if(toTime(dist[nextHop])>toTime(nearestMinutesArray[nextHop])){
+				dist[nextHop]=nearestMinutesArray[nextHop];
+				route[min_v][nextHop]=nearestMinutesArray[nextHop];
+			};
+		};
+		used[min_v]=true;
+		console.table(used);
+	};
+	return [];
+};
 function dfs(nodes:string[],matrix:number[][],v:number,to:number,seen:boolean[],route:string[]):boolean{
 	seen[v]=true;
 	route.push(nodes[v]);
@@ -163,11 +256,21 @@ function dummy_dfs(nodes:string[],matrix:number[][],v:number,to:number,from:numb
 function findRoute2(nodes:string[],matrix:number[][],from:number,to:number,time:string,busTimetableArray:BusTimetable[],searchCondition:SearchCondition,weight:number[][]):string[]{
 	let seen:boolean[]=[];
 	let finish:boolean[]=[];
-	let route:string[]=[];
+	let route:string[][]=[];
+	let r:string[]=[];
 	for (let index = 0; index < nodes.length; index++){
 		seen[index]=false;
 		finish[index]=false;
 	};
+	for (let outer = 0; outer < nodes.length ; outer++){
+		route[outer]=[];
+		for (let inner = 0 ; inner < nodes.length ; inner++){
+			route[outer][inner]="INF";
+		};
+	};
+	dijkstra(nodes,matrix,nodes.indexOf(searchCondition.from),route,busTimetableArray,searchCondition);
+	console.table(route);
+	return [];
 	console.table(nodes);
 	console.table(matrix);
 	console.log("From:"+nodes[from]);
@@ -178,7 +281,7 @@ function findRoute2(nodes:string[],matrix:number[][],from:number,to:number,time:
 		};
 		route=[];
 		console.log(nodes[v]+"->"+nodes[to]);
-		if (dfs(nodes,matrix,v,to,seen,route)){
+		if (dfs(nodes,matrix,v,to,seen,r)){
 			console.log("true");
 			const reSearchCondition:SearchCondition={
 				busType:searchCondition.busType,
@@ -344,10 +447,35 @@ function printBusRouteMatrix(str:string,nodes:string[],matrix:number[][]){
 };
 
 function toTime(timeSrting: string): Date {
-	const hour = parseInt(timeSrting.slice(0, 2));
+	if (timeSrting === "INF"){
+		return new Date(8.64e15);
+	};
+	if (timeSrting ==="0"){
+		return new Date(0);
+	};
 	const minute = parseInt(timeSrting.slice(2, 4));
+	const hour = parseInt(timeSrting.slice(0, 2));
+
 	const now = new Date();
-	return new Date((now.getUTCMonth() + 1) + " " + now.getUTCDate() + ", " + now.getUTCFullYear() + " " + hour + ":" + minute + ":00");
+	now.setMinutes(minute);
+	now.setHours(hour);
+	//return new Date((now.getUTCMonth() + 1) + " " + now.getUTCDate() + ", " + now.getUTCFullYear() + " " + hour + ":" + minute + ":00");
+	return now;
+};
+
+function addWalkTime(timeStringT: string,timeStringW:string): string {
+	const hourT:number = parseInt(timeStringT.slice(0, 2));
+	const hourW:number = parseInt(timeStringW.slice(0, 2))-25;
+	const minuteT:number = parseInt(timeStringT.slice(2, 4));
+	const minuteW:number = parseInt(timeStringW.slice(2, 4));
+
+	let hour = hourT+hourW;
+	let minute = minuteT+minuteW;
+	minute=minute%60;
+	hour+=Math.floor(minute/60);
+	console.log(hour);
+	console.log(minute);
+	return hour.toString().padStart(2,"0")+minute.toString().padStart(2,"0");
 };
 
 function swapBusTimetable(specifiedBusTimetableArray:BusTimetable[],i:number,j:number):void{

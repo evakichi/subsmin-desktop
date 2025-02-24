@@ -1,5 +1,26 @@
 [
   {
+    "busType": "walk",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 0,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "kantetsu:nims",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "2500"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "2510",
+        "departure": "none"
+      }
+    ]
+  },
+  {
     "busType": "nims",
     "opration": "weekday",
     "option": "none",

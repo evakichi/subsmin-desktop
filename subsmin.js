@@ -62,6 +62,108 @@ function getNextHops(edge) {
     return result;
 }
 ;
+function chmin(a, b) {
+    if (a > b) {
+        a = b;
+        return true;
+    }
+    ;
+    return false;
+}
+;
+function getNearestMinutesArray(busTimetableArray, nodes, matrix, pivot, time) {
+    var nearestMinutesArray = [];
+    var nextHops = getNextHops(matrix[pivot]);
+    for (var i = 0; i < nodes.length; i++) {
+        nearestMinutesArray[i] = "INF";
+    }
+    ;
+    for (var _i = 0, nextHops_1 = nextHops; _i < nextHops_1.length; _i++) {
+        var nextHop = nextHops_1[_i];
+        var reSearchCondition = {
+            busType: "nimsbus",
+            from: nodes[pivot],
+            to: nodes[nextHop],
+            departureOrArrival: "arrival",
+            direction: "ascending",
+            time: time,
+        };
+        console.log(reSearchCondition.from + "->" + reSearchCondition.to);
+        var graterEqualThanDepartureTimetableArray = extractGraterEqualThanDepartureBusTimetableArray(busTimetableArray, reSearchCondition);
+        var sortedGraterEqualThanDepartureTimetableArray = sortingDepartureBusTimetableArray(graterEqualThanDepartureTimetableArray, reSearchCondition);
+        if (sortedGraterEqualThanDepartureTimetableArray.length !== 0) {
+            console.log(sortedGraterEqualThanDepartureTimetableArray[0]);
+            console.log(reSearchCondition);
+            console.log(nextHop);
+            if (sortedGraterEqualThanDepartureTimetableArray[0].busType === "walk") {
+                console.log("**************************************walk**************************************");
+                var arrivalTime = addWalkTime(time, getArrivalTimeString(sortedGraterEqualThanDepartureTimetableArray[0].timetable, reSearchCondition));
+                console.log(arrivalTime);
+                nearestMinutesArray[nextHop] = arrivalTime;
+            }
+            else {
+                console.log("**************************************bus**************************************");
+                var arrivalTime = getArrivalTimeString(sortedGraterEqualThanDepartureTimetableArray[0].timetable, reSearchCondition);
+                console.log(arrivalTime);
+                nearestMinutesArray[nextHop] = arrivalTime;
+            }
+            ;
+        }
+        ;
+    }
+    ;
+    return nearestMinutesArray;
+}
+;
+function dijkstra(nodes, matrix, s, route, busTimetableArray, searchCondition) {
+    var INF = Number.MAX_SAFE_INTEGER;
+    var dist = [];
+    var used = [];
+    for (var index = 0; index < nodes.length; index++) {
+        used[index] = false;
+        dist[index] = "INF";
+    }
+    ;
+    console.table(nodes);
+    console.table(matrix);
+    console.log(dist);
+    dist[s] = searchCondition.time;
+    for (var outer = 0; outer < dist.length; outer++) {
+        var min_dist = "INF";
+        var min_v = -1;
+        for (var v = 0; v < dist.length; v++) {
+            if (!used[v] && toTime(dist[v]) < toTime(min_dist)) {
+                min_v = v;
+                min_dist = dist[v];
+            }
+            ;
+        }
+        ;
+        if (min_v === -1) {
+            break;
+        }
+        ;
+        var nearestMinutesArray = getNearestMinutesArray(busTimetableArray, nodes, matrix, min_v, min_dist);
+        var nextHops = getNextHops(matrix[min_v]);
+        console.table(nearestMinutesArray);
+        for (var _i = 0, nextHops_2 = nextHops; _i < nextHops_2.length; _i++) {
+            var nextHop = nextHops_2[_i];
+            console.log(nextHop);
+            console.log("dist=" + dist[nextHop] + " nearlest=" + nearestMinutesArray[nextHop]);
+            if (toTime(dist[nextHop]) > toTime(nearestMinutesArray[nextHop])) {
+                dist[nextHop] = nearestMinutesArray[nextHop];
+                route[min_v][nextHop] = nearestMinutesArray[nextHop];
+            }
+            ;
+        }
+        ;
+        used[min_v] = true;
+        console.table(used);
+    }
+    ;
+    return [];
+}
+;
 function dfs(nodes, matrix, v, to, seen, route) {
     seen[v] = true;
     route.push(nodes[v]);
@@ -128,11 +230,23 @@ function findRoute2(nodes, matrix, from, to, time, busTimetableArray, searchCond
     var seen = [];
     var finish = [];
     var route = [];
+    var r = [];
     for (var index = 0; index < nodes.length; index++) {
         seen[index] = false;
         finish[index] = false;
     }
     ;
+    for (var outer = 0; outer < nodes.length; outer++) {
+        route[outer] = [];
+        for (var inner = 0; inner < nodes.length; inner++) {
+            route[outer][inner] = "INF";
+        }
+        ;
+    }
+    ;
+    dijkstra(nodes, matrix, nodes.indexOf(searchCondition.from), route, busTimetableArray, searchCondition);
+    console.table(route);
+    return [];
     console.table(nodes);
     console.table(matrix);
     console.log("From:" + nodes[from]);
@@ -145,7 +259,7 @@ function findRoute2(nodes, matrix, from, to, time, busTimetableArray, searchCond
         ;
         route = [];
         console.log(nodes[v] + "->" + nodes[to]);
-        if (dfs(nodes, matrix, v, to, seen, route)) {
+        if (dfs(nodes, matrix, v, to, seen, r)) {
             console.log("true");
             var reSearchCondition = {
                 busType: searchCondition.busType,
@@ -219,7 +333,7 @@ function find(busStopArray, busTimetableArray, searchCondition) {
     var tmpResultBusTimetableArray = [];
     if (searchCondition.departureOrArrival === "arrival") {
         var arrivalRouteArray = route.reverse();
-        var time = searchCondition.time;
+        var time_1 = searchCondition.time;
         var index = 0;
         var to = "";
         var from = "";
@@ -238,7 +352,7 @@ function find(busStopArray, busTimetableArray, searchCondition) {
                 to: to,
                 departureOrArrival: searchCondition.departureOrArrival,
                 direction: searchCondition.direction,
-                time: time,
+                time: time_1,
             };
             var lessEqualThanArrivalTimetableArray = extractLessEqualThanArrivalBusTimetableArray(busTimetableArray, reSearchCondition);
             var sortedLessEqualThanArrivalTimetableArray = sortingArrivalBusTimetableArray(lessEqualThanArrivalTimetableArray, reSearchCondition);
@@ -247,7 +361,7 @@ function find(busStopArray, busTimetableArray, searchCondition) {
             }
             ;
             tmpResultBusTimetableArray[tmpResultBusTimetableArray.length] = sortedLessEqualThanArrivalTimetableArray[0];
-            time = getDepartureTimeString(sortedLessEqualThanArrivalTimetableArray[0].timetable, reSearchCondition);
+            time_1 = getDepartureTimeString(sortedLessEqualThanArrivalTimetableArray[0].timetable, reSearchCondition);
             to = from;
             var resultBusTimetableArray = [tmpResultBusTimetableArray[0]];
             for (var _a = 0, tmpResultBusTimetableArray_1 = tmpResultBusTimetableArray; _a < tmpResultBusTimetableArray_1.length; _a++) {
@@ -263,7 +377,7 @@ function find(busStopArray, busTimetableArray, searchCondition) {
     }
     else if (searchCondition.departureOrArrival === "departure") {
         var departureRouteArray = route;
-        var time = searchCondition.time;
+        var time_2 = searchCondition.time;
         var index = 0;
         var to = "";
         var from = "";
@@ -282,7 +396,7 @@ function find(busStopArray, busTimetableArray, searchCondition) {
                 to: to,
                 departureOrArrival: searchCondition.departureOrArrival,
                 direction: searchCondition.direction,
-                time: time,
+                time: time_2,
             };
             var graterEqualThanArrivalTimetableArray = extractGraterEqualThanDepartureBusTimetableArray(busTimetableArray, reSearchCondition);
             var sortedGraterEqualThanArrivalTimetableArray = sortingDepartureBusTimetableArray(graterEqualThanArrivalTimetableArray, reSearchCondition);
@@ -291,7 +405,7 @@ function find(busStopArray, busTimetableArray, searchCondition) {
             }
             ;
             tmpResultBusTimetableArray[tmpResultBusTimetableArray.length] = sortedGraterEqualThanArrivalTimetableArray[0];
-            time = getArrivalTimeString(sortedGraterEqualThanArrivalTimetableArray[0].timetable, reSearchCondition);
+            time_2 = getArrivalTimeString(sortedGraterEqualThanArrivalTimetableArray[0].timetable, reSearchCondition);
             from = to;
         }
         ;
@@ -331,10 +445,35 @@ function printBusRouteMatrix(str, nodes, matrix) {
 }
 ;
 function toTime(timeSrting) {
-    var hour = parseInt(timeSrting.slice(0, 2));
+    if (timeSrting === "INF") {
+        return new Date(8.64e15);
+    }
+    ;
+    if (timeSrting === "0") {
+        return new Date(0);
+    }
+    ;
     var minute = parseInt(timeSrting.slice(2, 4));
+    var hour = parseInt(timeSrting.slice(0, 2));
     var now = new Date();
-    return new Date((now.getUTCMonth() + 1) + " " + now.getUTCDate() + ", " + now.getUTCFullYear() + " " + hour + ":" + minute + ":00");
+    now.setMinutes(minute);
+    now.setHours(hour);
+    //return new Date((now.getUTCMonth() + 1) + " " + now.getUTCDate() + ", " + now.getUTCFullYear() + " " + hour + ":" + minute + ":00");
+    return now;
+}
+;
+function addWalkTime(timeStringT, timeStringW) {
+    var hourT = parseInt(timeStringT.slice(0, 2));
+    var hourW = parseInt(timeStringW.slice(0, 2)) - 25;
+    var minuteT = parseInt(timeStringT.slice(2, 4));
+    var minuteW = parseInt(timeStringW.slice(2, 4));
+    var hour = hourT + hourW;
+    var minute = minuteT + minuteW;
+    minute = minute % 60;
+    hour += Math.floor(minute / 60);
+    console.log(hour);
+    console.log(minute);
+    return hour.toString().padStart(2, "0") + minute.toString().padStart(2, "0");
 }
 ;
 function swapBusTimetable(specifiedBusTimetableArray, i, j) {
