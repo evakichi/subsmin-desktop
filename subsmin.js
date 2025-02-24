@@ -62,7 +62,33 @@ function getNextHops(edge) {
     return result;
 }
 ;
-function dfs(nodes, matrix, v, to, from, seen, finish, route) {
+function dfs(nodes, matrix, v, to, seen, route) {
+    seen[v] = true;
+    route.push(nodes[v]);
+    if (seen[to]) {
+        console.table(route);
+        return true;
+    }
+    ;
+    console.log("seen:" + v);
+    var edges = getNextHops(matrix[v]);
+    for (var _i = 0, edges_1 = edges; _i < edges_1.length; _i++) {
+        var next_v = edges_1[_i];
+        if (seen[next_v]) {
+            continue;
+        }
+        ;
+        if (dfs(nodes, matrix, next_v, to, seen, route)) {
+            return true;
+        }
+        ;
+    }
+    ;
+    route.pop();
+    return false;
+}
+;
+function dummy_dfs(nodes, matrix, v, to, from, seen, finish, route) {
     seen[v] = true;
     route.push(nodes[v]);
     console.log(route);
@@ -82,7 +108,7 @@ function dfs(nodes, matrix, v, to, from, seen, finish, route) {
             return true;
         }
         ;
-        if (dfs(nodes, matrix, v2, to, v, seen, finish, route)) {
+        if (dummy_dfs(nodes, matrix, v2, to, v, seen, finish, route)) {
             return true;
         }
         ;
@@ -98,28 +124,98 @@ function dfs(nodes, matrix, v, to, from, seen, finish, route) {
     return false;
 }
 ;
-function findRoute(nodes, matrix, searchCondition) {
+function findRoute2(nodes, matrix, from, to, time, busTimetableArray, searchCondition, weight) {
     var seen = [];
     var finish = [];
+    var route = [];
     for (var index = 0; index < nodes.length; index++) {
         seen[index] = false;
         finish[index] = false;
     }
     ;
+    console.table(nodes);
+    console.table(matrix);
+    console.log("From:" + nodes[from]);
+    var edge = getNextHops(matrix[from]);
+    for (var _i = 0, edge_2 = edge; _i < edge_2.length; _i++) {
+        var v = edge_2[_i];
+        for (var index = 0; index < nodes.length; index++) {
+            seen[index] = false;
+        }
+        ;
+        route = [];
+        console.log(nodes[v] + "->" + nodes[to]);
+        if (dfs(nodes, matrix, v, to, seen, route)) {
+            console.log("true");
+            var reSearchCondition = {
+                busType: searchCondition.busType,
+                from: nodes[from],
+                to: nodes[v],
+                departureOrArrival: searchCondition.departureOrArrival,
+                direction: searchCondition.direction,
+                time: time,
+            };
+            var graterEqualThanArrivalTimetableArray = extractGraterEqualThanDepartureBusTimetableArray(busTimetableArray, reSearchCondition);
+            var sortedGraterEqualThanArrivalTimetableArray = sortingDepartureBusTimetableArray(graterEqualThanArrivalTimetableArray, reSearchCondition);
+            console.log(sortedGraterEqualThanArrivalTimetableArray[0]);
+            console.table(route);
+        }
+        else {
+            console.log("false");
+        }
+        ;
+    }
+    ;
+    return [];
+}
+;
+function findRoute(nodes, matrix, searchCondition) {
+    var seen = [];
+    var finish = [];
     var route = [];
-    var result = dfs(nodes, matrix, nodes.indexOf(searchCondition.from), nodes.indexOf(searchCondition.to), -1, seen, finish, route);
+    for (var index = 0; index < nodes.length; index++) {
+        seen[index] = false;
+        finish[index] = false;
+    }
+    ;
+    var to = nodes.indexOf(searchCondition.to);
+    var from = nodes.indexOf(searchCondition.from);
+    console.log("From:" + nodes[from]);
+    for (var _i = 0, _a = matrix[from]; _i < _a.length; _i++) {
+        var v = _a[_i];
+        for (var index = 0; index < nodes.length; index++) {
+            seen[index] = false;
+        }
+        ;
+        route = [];
+        dfs(nodes, matrix, v, to, seen, route);
+        if (seen[nodes.indexOf(searchCondition.to)]) {
+            console.log("true");
+            console.table(route);
+        }
+        else {
+            console.log("false");
+        }
+        ;
+    }
+    ;
+    var result = dummy_dfs(nodes, matrix, nodes.indexOf(searchCondition.from), nodes.indexOf(searchCondition.to), -1, seen, finish, route);
     if (result) {
         return route;
     }
+    ;
     return [];
 }
 ;
 function find(busStopArray, busTimetableArray, searchCondition) {
     var nodes = getAllNodes(busStopArray);
     var matrix = getNodesMatrix(busStopArray, nodes);
-    var route = findRoute(nodes, matrix, searchCondition);
+    //const route:string[]=findRoute(nodes,matrix,searchCondition);
+    var weight = [];
+    var route = findRoute2(nodes, matrix, nodes.indexOf(searchCondition.from), nodes.indexOf(searchCondition.to), searchCondition.time, busTimetableArray, searchCondition, weight);
     console.log("Route");
     console.table(route);
+    return [];
     var tmpResultBusTimetableArray = [];
     if (searchCondition.departureOrArrival === "arrival") {
         var arrivalRouteArray = route.reverse();

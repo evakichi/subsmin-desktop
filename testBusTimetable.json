@@ -1654,5 +1654,975 @@
         "departure": "none"
       }
     ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:sengen",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:sengen",
+        "arrival": "none",
+        "departure": "0756"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0803",
+        "departure": "0803"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "0803"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "0811",
+        "departure": "0811"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "0816",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "nims:sengen",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "0821"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "0826",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:sengen",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:sengen",
+        "arrival": "none",
+        "departure": "0833"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0840",
+        "departure": "none"
+      }
+    ]
+  }, 
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "0840"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "0848",
+        "departure": "0848"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "0853",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "nims:sengen",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "0858"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "0903",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:sengen",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:sengen",
+        "arrival": "none",
+        "departure": "0908"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0915",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "0915"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "0923",
+        "departure": "0923"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "0928",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "0933"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "0938",
+        "departure": "0938"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0943",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "0948"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "0953",
+        "departure": "0953"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "0958",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "nims:sengen",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1003"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1008",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:sengen",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:sengen",
+        "arrival": "none",
+        "departure": "1023"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1030",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1030"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1038",
+        "departure": "1038"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1043",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1048"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1053",
+        "departure": "1053"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1100",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1100"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1108",
+        "departure": "1108"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1113",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1118"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1123",
+        "departure": "1123"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1130",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1130"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1138",
+        "departure": "1138"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1143",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1148"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1153",
+        "departure": "1153"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1200",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1200"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1208",
+        "departure": "1208"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1213",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "nims:sengen",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1215"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1220",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:sengen",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:sengen",
+        "arrival": "none",
+        "departure": "1423"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1430",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1430"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1438",
+        "departure": "1438"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1443",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1448"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1453",
+        "departure": "1453"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1500",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1500"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1508",
+        "departure": "1508"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1513",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1518"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1523",
+        "departure": "1523"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1530",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1530"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1538",
+        "departure": "1538"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1543",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1548"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1553",
+        "departure": "1553"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1600",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1600"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1608",
+        "departure": "1608"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1613",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "nims:sengen",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1615"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1620",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:sengen",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:sengen",
+        "arrival": "none",
+        "departure": "1636"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1643",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1643"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1653",
+        "departure": "1653"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1658",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1703"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1708",
+        "departure": "1708"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1715",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1715"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1723",
+        "departure": "1723"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1728",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1733"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1738",
+        "departure": "1738"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1745",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1545"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1753",
+        "departure": "1753"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1758",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1803"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1808",
+        "departure": "1808"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1815",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1815"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1823",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "nims:sengen",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "nims:sengen",
+        "arrival": "none",
+        "departure": "1833"
+      },
+      {
+        "busStop": "nims:namiki",
+        "arrival": "1838",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"ascending",
+    "startingPoint": "nims:namiki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "nims:namiki",
+        "arrival": "none",
+        "departure": "1843"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1848",
+        "departure": "1848"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1855",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "nims",
+    "opration": "weekday",
+    "option": "none",
+    "carNo": 1,
+    "direction":"descending",
+    "startingPoint": "tsukuba",
+    "destination": "nims:namiki",
+    "timetable": [
+      {
+        "busStop": "tsukuba",
+        "arrival": "none",
+        "departure": "1855"
+      },
+      {
+        "busStop": "nims:sengen",
+        "arrival": "1903",
+        "departure": "none"
+      }
+    ]
   }
 ]
