@@ -121,7 +121,7 @@ function chmin(a:number,b:number):boolean{
 };
 
 
-function getNearestMinutesArray(busTimetableArray:BusTimetable[],nodes:string[],matrix:number[][],pivot:number,time:string):string[]{
+function getNearestArrivalTimeArray(busTimetableArray:BusTimetable[],nodes:string[],matrix:number[][],pivot:number,time:string):string[]{
 	let nearestMinutesArray:string[]=[];
 	const nextHops:number[]=getNextHops(matrix[pivot]);
 	for (let i = 0; i < nodes.length ; i++ ){
@@ -164,6 +164,7 @@ function dijkstra(nodes:string[],matrix:number[][],s:number,route:string[][],bus
 	const INF:number = Number.MAX_SAFE_INTEGER;
 	let dist:string[]=[];
 	let used:boolean[]=[];
+	let path:number[]=[];
 	for (let index = 0; index < nodes.length ; index++){
 		used[index] = false;
 		dist[index] = "INF";
@@ -187,21 +188,25 @@ function dijkstra(nodes:string[],matrix:number[][],s:number,route:string[][],bus
 			break;
 		};
 		
-		const nearestMinutesArray:string[]=getNearestMinutesArray(busTimetableArray,nodes,matrix,min_v,min_dist);
+		const nearestArrivalTimeArray:string[]=getNearestArrivalTimeArray(busTimetableArray,nodes,matrix,min_v,min_dist);
 		const nextHops:number[]=getNextHops(matrix[min_v]);
-		console.table(nearestMinutesArray);
+
 		for (let nextHop of nextHops){
-			console.log(nextHop);
-			console.log("dist="+dist[nextHop]+" nearlest="+nearestMinutesArray[nextHop]);
-			if(toTime(dist[nextHop])>toTime(nearestMinutesArray[nextHop])){
-				dist[nextHop]=nearestMinutesArray[nextHop];
-				route[min_v][nextHop]=nearestMinutesArray[nextHop];
+			console.log("dist="+dist[nextHop]+" nearlest="+nearestArrivalTimeArray[nextHop]);
+			if(toTime(dist[nextHop])>toTime(nearestArrivalTimeArray[nextHop])){
+				console.table(route);
+				console.log("nextHop:"+nextHop+" min_v:"+min_v);
+				path[min_v]=nextHop;
+				dist[nextHop]=nearestArrivalTimeArray[nextHop];
+				route[min_v][nextHop]=nearestArrivalTimeArray[nextHop];
 			};
 		};
+		console.table(route);
 		used[min_v]=true;
 		console.table(used);
 	};
-	return [];
+	console.table(path);
+	return dist;
 };
 function dfs(nodes:string[],matrix:number[][],v:number,to:number,seen:boolean[],route:string[]):boolean{
 	seen[v]=true;
@@ -268,8 +273,8 @@ function findRoute2(nodes:string[],matrix:number[][],from:number,to:number,time:
 			route[outer][inner]="INF";
 		};
 	};
-	dijkstra(nodes,matrix,nodes.indexOf(searchCondition.from),route,busTimetableArray,searchCondition);
-	console.table(route);
+	const dist:string[]=dijkstra(nodes,matrix,nodes.indexOf(searchCondition.from),route,busTimetableArray,searchCondition);
+	console.table(dist);
 	return [];
 	console.table(nodes);
 	console.table(matrix);

@@ -71,7 +71,7 @@ function chmin(a, b) {
     return false;
 }
 ;
-function getNearestMinutesArray(busTimetableArray, nodes, matrix, pivot, time) {
+function getNearestArrivalTimeArray(busTimetableArray, nodes, matrix, pivot, time) {
     var nearestMinutesArray = [];
     var nextHops = getNextHops(matrix[pivot]);
     for (var i = 0; i < nodes.length; i++) {
@@ -119,6 +119,7 @@ function dijkstra(nodes, matrix, s, route, busTimetableArray, searchCondition) {
     var INF = Number.MAX_SAFE_INTEGER;
     var dist = [];
     var used = [];
+    var path = [];
     for (var index = 0; index < nodes.length; index++) {
         used[index] = false;
         dist[index] = "INF";
@@ -143,25 +144,28 @@ function dijkstra(nodes, matrix, s, route, busTimetableArray, searchCondition) {
             break;
         }
         ;
-        var nearestMinutesArray = getNearestMinutesArray(busTimetableArray, nodes, matrix, min_v, min_dist);
+        var nearestArrivalTimeArray = getNearestArrivalTimeArray(busTimetableArray, nodes, matrix, min_v, min_dist);
         var nextHops = getNextHops(matrix[min_v]);
-        console.table(nearestMinutesArray);
         for (var _i = 0, nextHops_2 = nextHops; _i < nextHops_2.length; _i++) {
             var nextHop = nextHops_2[_i];
-            console.log(nextHop);
-            console.log("dist=" + dist[nextHop] + " nearlest=" + nearestMinutesArray[nextHop]);
-            if (toTime(dist[nextHop]) > toTime(nearestMinutesArray[nextHop])) {
-                dist[nextHop] = nearestMinutesArray[nextHop];
-                route[min_v][nextHop] = nearestMinutesArray[nextHop];
+            console.log("dist=" + dist[nextHop] + " nearlest=" + nearestArrivalTimeArray[nextHop]);
+            if (toTime(dist[nextHop]) > toTime(nearestArrivalTimeArray[nextHop])) {
+                console.table(route);
+                console.log("nextHop:" + nextHop + " min_v:" + min_v);
+                path[min_v] = nextHop;
+                dist[nextHop] = nearestArrivalTimeArray[nextHop];
+                route[min_v][nextHop] = nearestArrivalTimeArray[nextHop];
             }
             ;
         }
         ;
+        console.table(route);
         used[min_v] = true;
         console.table(used);
     }
     ;
-    return [];
+    console.table(path);
+    return dist;
 }
 ;
 function dfs(nodes, matrix, v, to, seen, route) {
@@ -244,8 +248,8 @@ function findRoute2(nodes, matrix, from, to, time, busTimetableArray, searchCond
         ;
     }
     ;
-    dijkstra(nodes, matrix, nodes.indexOf(searchCondition.from), route, busTimetableArray, searchCondition);
-    console.table(route);
+    var dist = dijkstra(nodes, matrix, nodes.indexOf(searchCondition.from), route, busTimetableArray, searchCondition);
+    console.table(dist);
     return [];
     console.table(nodes);
     console.table(matrix);
