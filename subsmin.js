@@ -1,7 +1,33 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 console.log("******");
+var noneBusTimeTable = {
+    busType: "None",
+    opration: "None",
+    option: "None",
+    direction: "None",
+    startingPoint: "None",
+    destination: "None",
+    carNo: "None",
+    timetable: [],
+};
+var noneTimetable = {
+    departure: "INF",
+    arrival: "INF",
+    busStop: "None",
+};
 var inputBusType = fs.readFileSync("/home/evakichi/subsmin-desktop/testBusType.json", 'utf-8');
 var targetBusTypeArray = JSON.parse(inputBusType);
 var inputBusStop = fs.readFileSync("/home/evakichi/subsmin-desktop/testBusStop.json", 'utf-8');
@@ -115,57 +141,149 @@ function getNearestArrivalTimeArray(busTimetableArray, nodes, matrix, pivot, tim
     return nearestMinutesArray;
 }
 ;
-function dijkstra(nodes, matrix, s, route, busTimetableArray, searchCondition) {
-    var INF = Number.MAX_SAFE_INTEGER;
-    var dist = [];
-    var used = [];
-    var path = [];
-    for (var index = 0; index < nodes.length; index++) {
-        used[index] = false;
-        dist[index] = "INF";
+function printDepatureArrival(timeTable, searchCondition) {
+    var from = "None";
+    var to = "None";
+    if (timeTable.length !== 0) {
+        if (timeTable.length !== 0) {
+            from = getDepartureTimeString(timeTable, searchCondition);
+            to = getArrivalTimeString(timeTable, searchCondition);
+        }
+        ;
     }
     ;
+    return from + "->" + to;
+}
+;
+function getNearestArrivalBustmeTable(reSearchCondition, busTimetableArray) {
+    var timetable = {
+        arrival: "INF",
+        departure: "INF",
+        busStop: reSearchCondition.from
+    };
+    var graterEqualThanDepartureTimetableArray = extractGraterEqualThanDepartureBusTimetableArray(busTimetableArray, reSearchCondition);
+    var sortedGraterEqualThanDepartureTimetableArray = sortingDepartureBusTimetableArray(graterEqualThanDepartureTimetableArray, reSearchCondition);
+    if (sortedGraterEqualThanDepartureTimetableArray.length !== 0) {
+        if (sortedGraterEqualThanDepartureTimetableArray[0].busType === "walk") {
+            console.log("**************************************walk**************************************");
+            var arrivalTime = addWalkTime(reSearchCondition.time, getArrivalTimeString(sortedGraterEqualThanDepartureTimetableArray[0].timetable, reSearchCondition));
+            console.log(arrivalTime);
+            timetable.departure = reSearchCondition.time;
+            timetable.arrival = arrivalTime;
+        }
+        else {
+            console.log("**************************************bus**************************************");
+            var departureTime = getDepartureTimeString(sortedGraterEqualThanDepartureTimetableArray[0].timetable, reSearchCondition);
+            var arrivalTime = getArrivalTimeString(sortedGraterEqualThanDepartureTimetableArray[0].timetable, reSearchCondition);
+            console.log(arrivalTime);
+            timetable.departure = departureTime;
+            timetable.arrival = arrivalTime;
+        }
+        ;
+        return timetable;
+    }
+    return noneTimetable;
+}
+;
+function getNearestArrivalBustmeTableArray(nodes, time, busTimetableVector) {
+    var busTimetableArray = [];
+    for (var from = 0; from < nodes.length; from++) {
+        busTimetableArray[from] = [];
+        for (var to = 0; to < nodes.length; to++) {
+            var reSearchCondition = {
+                busType: "nimsbus",
+                from: nodes[from],
+                to: nodes[to],
+                departureOrArrival: "arrival",
+                direction: "ascending",
+                time: time,
+            };
+            busTimetableArray[from][to] = getNearestArrivalBustmeTable(reSearchCondition, busTimetableVector);
+        }
+        ;
+    }
+    ;
+    console.log();
+    return busTimetableArray;
+}
+;
+function printTimeTableArray(timetableArray) {
+    var timeTableStrignArray = [];
+    for (var outer = 0; outer < timetableArray.length; outer++) {
+        timeTableStrignArray[outer] = [];
+        for (var inner = 0; inner < timetableArray.length; inner++) {
+            timeTableStrignArray[outer][inner] = timetableArray[outer][inner].departure + "->" + timetableArray[outer][inner].arrival;
+        }
+        ;
+    }
+    ;
+    console.table(timeTableStrignArray);
+}
+;
+function dijkstra(nodes, matrix, s, route, busTimetableVector, searchCondition) {
+    var timetableArray = getNearestArrivalBustmeTableArray(nodes, searchCondition.time, busTimetableVector);
+    var timetableVector = [];
+    var used = new Array(nodes.length).fill(false);
+    var path = new Array(nodes.length).fill(-1);
+    var flag = false;
     console.table(nodes);
     console.table(matrix);
-    console.log(dist);
-    dist[s] = searchCondition.time;
-    for (var outer = 0; outer < dist.length; outer++) {
-        var min_dist = "INF";
+    console.log(s);
+    printTimeTableArray(timetableArray);
+    for (var index = 0; index < nodes.length; index++) {
+        timetableVector[index] = __assign({}, noneTimetable);
+    }
+    ;
+    timetableVector[s].departure = searchCondition.time;
+    timetableVector[s].arrival = searchCondition.time;
+    console.table(timetableVector);
+    for (var outer = 0; outer < nodes.length; outer++) {
+        var min_dist = noneTimetable;
         var min_v = -1;
-        for (var v = 0; v < dist.length; v++) {
-            if (!used[v] && toTime(dist[v]) < toTime(min_dist)) {
+        for (var v = 0; v < nodes.length; v++) {
+            if (!used[v] && toTime(timetableVector[v].arrival) < toTime(min_dist.arrival)) {
                 min_v = v;
-                min_dist = dist[v];
+                min_dist = timetableVector[v];
             }
             ;
         }
         ;
-        if (min_v === -1) {
+        used[min_v] = true;
+        console.log("used:");
+        console.table(used);
+        console.log("outer" + outer + " min_v" + min_v + " min_dist" + min_dist.arrival);
+        console.table(timetableVector);
+        if (min_dist === noneTimetable) {
             break;
         }
         ;
-        var nearestArrivalTimeArray = getNearestArrivalTimeArray(busTimetableArray, nodes, matrix, min_v, min_dist);
-        var nextHops = getNextHops(matrix[min_v]);
-        for (var _i = 0, nextHops_2 = nextHops; _i < nextHops_2.length; _i++) {
-            var nextHop = nextHops_2[_i];
-            console.log("dist=" + dist[nextHop] + " nearlest=" + nearestArrivalTimeArray[nextHop]);
-            if (toTime(dist[nextHop]) > toTime(nearestArrivalTimeArray[nextHop])) {
-                console.table(route);
-                console.log("nextHop:" + nextHop + " min_v:" + min_v);
-                path[min_v] = nextHop;
-                dist[nextHop] = nearestArrivalTimeArray[nextHop];
-                route[min_v][nextHop] = nearestArrivalTimeArray[nextHop];
+        var tmpTimetableArray = getNearestArrivalBustmeTableArray(nodes, min_dist.departure, busTimetableVector);
+        for (var v = 0; v < nodes.length; v++) {
+            if (toTime(tmpTimetableArray[min_v][v].arrival) < toTime(timetableVector[v].arrival)) {
+                timetableVector[v] = tmpTimetableArray[min_v][v];
+                path[v] = min_v;
             }
             ;
         }
         ;
-        console.table(route);
-        used[min_v] = true;
-        console.table(used);
+        console.log("path:");
+        console.table(path);
     }
     ;
     console.table(path);
-    return dist;
+    var result = "";
+    for (var i = 0; i < nodes.length; i++) {
+        result += timetableVector[i].departure + " : " + i + " ";
+        var p = i;
+        while (path[p] !== -1) {
+            result += " <--" + path[p];
+            p = path[p];
+        }
+        result += "\n";
+    }
+    ;
+    console.log(result);
+    return [];
 }
 ;
 function dfs(nodes, matrix, v, to, seen, route) {
