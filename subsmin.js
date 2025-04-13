@@ -13,16 +13,6 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 console.log("******");
-var noneBusTimeTable = {
-    busType: "None",
-    opration: "None",
-    option: "None",
-    direction: "None",
-    startingPoint: "None",
-    destination: "None",
-    carNo: "None",
-    timetable: [],
-};
 var noneTimetable = {
     departure: "INF",
     arrival: "INF",
@@ -166,6 +156,7 @@ function dijkstra(nodes, busTimetableArray, searchCondition) {
     var path = new Array(nodes.length).fill(-1);
     var r = [];
     var route = [];
+    var routeTimetableVector = [];
     var fromNumber = nodes.indexOf(searchCondition.fromString);
     var toNumber = nodes.indexOf(searchCondition.toString);
     console.table(nodes);
@@ -227,28 +218,37 @@ function dijkstra(nodes, busTimetableArray, searchCondition) {
             }
             ;
             var rev = r.reverse();
+            var index = 0;
+            var prev = "None";
             for (var _i = 0, rev_1 = rev; _i < rev_1.length; _i++) {
                 var r_1 = rev_1[_i];
                 route[route.length] = nodes[r_1];
+                routeTimetableVector[routeTimetableVector.length] = {
+                    source: prev,
+                    dst: nodes[r_1],
+                    arrival: timetableVector[r_1].arrival,
+                    departure: timetableVector[r_1].departure
+                };
+                prev = nodes[r_1];
             }
             ;
         }
         ;
         var p = i;
         while (path[p] !== -1) {
-            result += " <--" + path[p];
+            result += " <-- " + path[p];
             p = path[p];
         }
         result += "\n";
     }
     ;
     console.log(result);
+    console.log(routeTimetableVector);
     return route;
 }
 ;
 function find(busStopArray, busTimetableArray, searchCondition) {
     var nodes = getAllNodes(busStopArray);
-    var matrix = getNodesMatrix(busStopArray, nodes);
     var route = dijkstra(nodes, busTimetableArray, searchCondition);
     console.log("Route");
     console.table(route);

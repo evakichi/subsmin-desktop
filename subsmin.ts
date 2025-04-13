@@ -2,6 +2,7 @@ import { time } from "console";
 import { StartLoggingOptions } from "electron";
 import * as fs from "fs";
 import { maxHeaderSize } from "http";
+import { deprecate } from "util";
 
 console.log("******");
 
@@ -40,26 +41,17 @@ type Timetable = {
 	departure: string;
 };
 
+type Result = {
+	source:string;
+	dst:string;
+	arrival:string;
+	departure:string;
+};
+
 type SearchCondition ={
 	fromString:string;
 	toString:string;
 	time:string;
-};
-
-type SearchResult ={
-	searchCondition:SearchCondition;
-	busTimeTable?:BusTimetable[];
-};
-
-const noneBusTimeTable:BusTimetable={
-	busType:"None",
-	opration:"None",
-	option:"None",
-	direction:"None",
-	startingPoint:"None",
-	destination:"None",
-	carNo:"None",
-	timetable: [],
 };
 
 const noneTimetable:Timetable={
@@ -198,6 +190,8 @@ function dijkstra(nodes:string[],busTimetableArray:BusTimetable[],searchConditio
 	let path:number[]=new Array(nodes.length).fill(-1);
 	let r:number[]=[];
 	let route:string[]=[];
+	let routeTimetableVector:Result[]=[];
+
 	const fromNumber=nodes.indexOf(searchCondition.fromString);
 	const toNumber=nodes.indexOf(searchCondition.toString);
 	console.table(nodes);
@@ -261,26 +255,35 @@ function dijkstra(nodes:string[],busTimetableArray:BusTimetable[],searchConditio
 				p=path[p];
 			};
 			const rev = r.reverse();
+			let index = 0;
+			let prev = "None";
 			for (let r of rev)
 			{
 				route[route.length]=nodes[r];
+				routeTimetableVector[routeTimetableVector.length]={
+					source:prev,
+					dst:nodes[r],
+					arrival:timetableVector[r].arrival,
+					departure:timetableVector[r].departure
+				};
+				prev = nodes[r];
 			};
 		};
 		let p = i;
 		while(path[p]!==-1)
 		{
-			result += " <--" + path[p];
+			result += " <-- " + path[p];
 			p = path[p];
 		}
 		result += "\n";
 	};
 	console.log(result);
+	console.log(routeTimetableVector);
 	return route;
 };
 
 function find(busStopArray:BusStop[],busTimetableArray:BusTimetable[],searchCondition:SearchCondition):BusTimetable[]{
 	const nodes:string[]=getAllNodes(busStopArray);
-	const matrix:number[][]=getNodesMatrix(busStopArray,nodes);
 	const route:string[]=dijkstra(nodes,busTimetableArray,searchCondition);
 	console.log("Route");
 	console.table(route);
