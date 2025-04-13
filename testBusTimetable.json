@@ -1488,8 +1488,8 @@
     "busType": "kantetsu",
     "opration": "weekday",
     "option": "none",
-    "startingPoint": "kantestu:tsukuba",
-    "destination": "kantestu:arakawaOki",
+    "startingPoint": "tsukuba",
+    "destination": "kantetsu:arakawaOki",
     "timetable": [
       {
         "busStop": "tsukuba",
@@ -1512,8 +1512,8 @@
     "busType": "kantetsu",
     "opration": "weekday",
     "option": "none",
-    "startingPoint": "kantestu:tsukuba",
-    "destination": "kantestu:arakawaOki",
+    "startingPoint": "tsukuba",
+    "destination": "kantetsu:arakawaOki",
     "timetable": [
       {
         "busStop": "tsukuba",
@@ -1536,8 +1536,8 @@
     "busType": "kantetsu",
     "opration": "weekday",
     "option": "none",
-    "startingPoint": "kantestu:tsukuba",
-    "destination": "kantestu:arakawaOki",
+    "startingPoint": "tsukuba",
+    "destination": "kantetsu:arakawaOki",
     "timetable": [
       {
         "busStop": "tsukuba",
@@ -1560,8 +1560,8 @@
     "busType": "kantetsu",
     "opration": "weekday",
     "option": "none",
-    "startingPoint": "kantestu:tsukuba",
-    "destination": "kantestu:arakawaOki",
+    "startingPoint": "tsukuba",
+    "destination": "kantetsu:arakawaOki",
     "timetable": [
       {
         "busStop": "tsukuba",
@@ -1584,8 +1584,8 @@
     "busType": "kantetsu",
     "opration": "weekday",
     "option": "none",
-    "startingPoint": "kantestu:tsukuba",
-    "destination": "kantestu:arakawaOki",
+    "startingPoint": "tsukuba",
+    "destination": "kantetsu:arakawaOki",
     "timetable": [
       {
         "busStop": "tsukuba",
@@ -1608,8 +1608,8 @@
     "busType": "kantetsu",
     "opration": "weekday",
     "option": "none",
-    "startingPoint": "kantestu:tsukuba",
-    "destination": "kantestu:arakawaOki",
+    "startingPoint": "tsukuba",
+    "destination": "kantetsu:arakawaOki",
     "timetable": [
       {
         "busStop": "tsukuba",
@@ -1632,8 +1632,8 @@
     "busType": "kantetsu",
     "opration": "weekday",
     "option": "none",
-    "startingPoint": "kantestu:tsukuba",
-    "destination": "kantestu:gakuenNamiki",
+    "startingPoint": "tsukuba",
+    "destination": "kantetsu:gakuenNamiki",
     "timetable": [
       {
         "busStop": "tsukuba",
@@ -1656,8 +1656,8 @@
     "busType": "kantetsu",
     "opration": "weekday",
     "option": "none",
-    "startingPoint": "kantestu:tsukuba",
-    "destination": "kantestu:gakuenNamiki",
+    "startingPoint": "tsukuba",
+    "destination": "kantetsu:gakuenNamiki",
     "timetable": [
       {
         "busStop": "tsukuba",
@@ -1672,6 +1672,954 @@
       {
         "busStop": "kantetsu:gakuenNamiki",
         "arrival": "0833",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "0615"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "0625",
+        "departure": "0625"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "0629",
+        "departure": "0629"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0642",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "0655"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "0707",
+        "departure": "0707"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "0711",
+        "departure": "0711"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0725",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "0715"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "0727",
+        "departure": "0727"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "0731",
+        "departure": "0731"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0745",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "0735"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "0750",
+        "departure": "0750"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "0754",
+        "departure": "0754"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0810",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "0757"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "0812",
+        "departure": "0812"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "0816",
+        "departure": "0816"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0832",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "kantetsu:tsukubaHospital",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "0815"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "0827",
+        "departure": "0827"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "0831",
+        "departure": "0831"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0847",
+        "departure": "0847"
+      },
+      {
+        "busStop": "kantetsu:tsukubaHospital",
+        "arrival": "0855",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "0845"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "0857",
+        "departure": "0857"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "0901",
+        "departure": "0901"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0915",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "0920"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "0932",
+        "departure": "0932"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "0936",
+        "departure": "0936"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "0950",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "0945"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "0957",
+        "departure": "0957"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1001",
+        "departure": "1001"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1015",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1030"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1042",
+        "departure": "1042"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1046",
+        "departure": "1046"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1100",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "kantetsu:tsukubaHospital",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1105"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1117",
+        "departure": "1117"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1121",
+        "departure": "1121"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1132",
+        "departure": "1132"
+      },
+      {
+        "busStop": "kantetsu:tsukubaHospital",
+        "arrival": "1140",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1130"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1142",
+        "departure": "1142"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1146",
+        "departure": "1146"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1200",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1205"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1217",
+        "departure": "1217"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1221",
+        "departure": "1221"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1235",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "kantetsu:tsukubaHospital",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1235"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1247",
+        "departure": "1247"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1251",
+        "departure": "1251"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1302",
+        "departure": "1302"
+      },
+      {
+        "busStop": "kantetsu:tsukubaHospital",
+        "arrival": "1310",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1305"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1317",
+        "departure": "1317"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1321",
+        "departure": "1321"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1335",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1330"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1342",
+        "departure": "1342"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1346",
+        "departure": "1346"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1400",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1405"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1417",
+        "departure": "1417"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1421",
+        "departure": "1421"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1435",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1442"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1454",
+        "departure": "1454"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1458",
+        "departure": "1458"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1512",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1505"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1517",
+        "departure": "1517"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1521",
+        "departure": "1521"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1535",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "kantetsu:tsukubaHospital",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1530"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1542",
+        "departure": "1542"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1546",
+        "departure": "1546"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1557",
+        "departure": "1557"
+      },
+      {
+        "busStop": "kantetsu:tsukubaHospital",
+        "arrival": "1605",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1605"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1617",
+        "departure": "1617"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1621",
+        "departure": "1621"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1635",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1630"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1642",
+        "departure": "1642"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1646",
+        "departure": "1646"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1700",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1700"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1715",
+        "departure": "1715"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1719",
+        "departure": "1719"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1735",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1730"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1745",
+        "departure": "1745"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1749",
+        "departure": "1749"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1805",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1825"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1840",
+        "departure": "1840"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1844",
+        "departure": "1844"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1900",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1845"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1857",
+        "departure": "1857"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1901",
+        "departure": "1901"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1915",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1910"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1922",
+        "departure": "1922"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1926",
+        "departure": "1926"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1940",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1930"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1942",
+        "departure": "1942"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1946",
+        "departure": "1946"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "2000",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1950"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "2002",
+        "departure": "2002"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "2006",
+        "departure": "2006"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "2020",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "2020"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "2032",
+        "departure": "2032"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "2036",
+        "departure": "2036"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "2050",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "2105"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "2115",
+        "departure": "2115"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "2119",
+        "departure": "2119"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "2132",
+        "departure": "none"
+      }
+    ]
+  },
+  {
+    "busType": "kantetsu",
+    "opration": "weekday",
+    "option": "none",
+    "startingPoint": "kantetsu:arakawaOki",
+    "destination": "tsukuba",
+    "timetable": [
+      {
+        "busStop": "kantetsu:arakawaOki",
+        "arrival": "none",
+        "departure": "1505"
+      },
+      {
+        "busStop": "kantetsu:gakuenNamiki",
+        "arrival": "1517",
+        "departure": "1517"
+      },
+      {
+        "busStop": "kantetsu:nims",
+        "arrival": "1521",
+        "departure": "1521"
+      },
+      {
+        "busStop": "tsukuba",
+        "arrival": "1535",
         "departure": "none"
       }
     ]

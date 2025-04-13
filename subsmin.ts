@@ -247,7 +247,7 @@ function printTimeTableArray(timetableArray:Timetable[][]):void{
 	console.table(timeTableStrignArray);
 };
 
-function dijkstra(nodes:string[],matrix:number[][],s:number,route:string[][],busTimetableVector:BusTimetable[],searchCondition:SearchCondition):string[]{
+function dijkstra(nodes:string[],matrix:number[][],s:number,busTimetableVector:BusTimetable[],searchCondition:SearchCondition):string[]{
 	let timetableArray:Timetable[][]=getNearestArrivalBustmeTableArray(nodes,searchCondition.time,busTimetableVector);
 	let timetableVector:Timetable[]=[];
 	let used:boolean[]=new Array(nodes.length).fill(false);
@@ -379,7 +379,7 @@ function findRoute2(nodes:string[],matrix:number[][],from:number,to:number,time:
 			route[outer][inner]="INF";
 		};
 	};
-	const dist:string[]=dijkstra(nodes,matrix,nodes.indexOf(searchCondition.from),route,busTimetableArray,searchCondition);
+	const dist:string[]=dijkstra(nodes,matrix,nodes.indexOf(searchCondition.from),busTimetableArray,searchCondition);
 	console.table(dist);
 	return [];
 	console.table(nodes);
