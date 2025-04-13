@@ -1,8 +1,5 @@
 {
-	"busType":"nims",
-	"from":"nims:namiki",
-	"to":"nims:sakura",
-	"departureOrArrival":"departure",
-	"direction":"none",
+	"fromString":"nims:namiki",
+	"toString":"nims:sakura",
 	"time":"1200"
 }
