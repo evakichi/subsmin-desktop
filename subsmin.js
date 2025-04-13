@@ -159,7 +159,7 @@ function printTimeTableArray(timetableArray) {
     console.table(timeTableStrignArray);
 }
 ;
-function dijkstra(nodes, matrix, busTimetableArray, searchCondition) {
+function dijkstra(nodes, busTimetableArray, searchCondition) {
     var timetableArray = getNearestArrivalBustmeTableArray(nodes, busTimetableArray, searchCondition);
     var timetableVector = [];
     var used = new Array(nodes.length).fill(false);
@@ -169,7 +169,6 @@ function dijkstra(nodes, matrix, busTimetableArray, searchCondition) {
     var fromNumber = nodes.indexOf(searchCondition.fromString);
     var toNumber = nodes.indexOf(searchCondition.toString);
     console.table(nodes);
-    console.table(matrix);
     printTimeTableArray(timetableArray);
     for (var index = 0; index < nodes.length; index++) {
         timetableVector[index] = __assign({}, noneTimetable);
@@ -250,7 +249,7 @@ function dijkstra(nodes, matrix, busTimetableArray, searchCondition) {
 function find(busStopArray, busTimetableArray, searchCondition) {
     var nodes = getAllNodes(busStopArray);
     var matrix = getNodesMatrix(busStopArray, nodes);
-    var route = dijkstra(nodes, matrix, busTimetableArray, searchCondition);
+    var route = dijkstra(nodes, busTimetableArray, searchCondition);
     console.log("Route");
     console.table(route);
     return [];
