@@ -136,9 +136,10 @@ function getNearestArrivalBustmeTable(busTimetableArray:BusTimetable[],reSearchC
 	if (sortedGraterEqualThanDepartureTimetableArray.length !==0){
 		if(sortedGraterEqualThanDepartureTimetableArray[0].busType==="walk"){
 			//console.log("**************************************walk**************************************");
+			const departurelTime:string = getDepartureTimeString(sortedGraterEqualThanDepartureTimetableArray[0].timetable,reSearchCondition);
 			const arrivalTime:string = addWalkTime(reSearchCondition.time,getArrivalTimeString(sortedGraterEqualThanDepartureTimetableArray[0].timetable,reSearchCondition));
 			//console.log(arrivalTime);
-			timetable.departure=reSearchCondition.time;
+			timetable.departure=departurelTime;
 			timetable.arrival=arrivalTime;
 		}else{
 			//console.log("**************************************bus**************************************");
